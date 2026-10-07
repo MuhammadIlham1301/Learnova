@@ -1,0 +1,29 @@
+{
+  "name": "learnova-backend",
+  "version": "1.0.0",
+  "description": "Learnova LMS REST API - Node.js + Express + SQLite",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node src/db/seed.js"
+  },
+  "keywords": [
+    "lms",
+    "learnova",
+    "express",
+    "sqlite"
+  ],
+  "author": "Learnova Team",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

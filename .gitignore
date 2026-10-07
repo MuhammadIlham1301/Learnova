@@ -1,0 +1,37 @@
+# Dependencies (reinstall: cd backend && npm install)
+node_modules/
+
+# Environment / secrets
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+~$*
+.vscode/
+.idea/
+
+# Temp / cache / generated artifacts
+*.tmp
+*.temp
+.cache/
+tmp/
+
+# Vercel CLI (tautan project / token lokal) & override lokal
+.vercel/
+*.local
+
+# NOTE yang TIDAK di-ignore (sengaja):
+# - backend/learnova.db  -> database demo dibutuhkan untuk menjalankan demo
+# - backend/package-lock.json -> lockfile untuk reproduksi instalasi
+# - semua source code, docs/, assets/, konfigurasi project

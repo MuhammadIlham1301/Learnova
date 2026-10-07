@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learnova - Dashboard</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Learnova legacy aliases (token values aligned with Stitch)
+                        primary: '#022619',
+                        accent: '#D4621A',
+                        base: '#F5F0E8',
+                        surface: '#eafef2',
+                        border: '#C8D5CC',
+                        // Stitch semantic palette
+                        background: '#eafef2',
+                        'on-surface': '#0e1f18',
+                        'on-surface-variant': '#414844',
+                        'surface-dim': '#cbdfd3',
+                        'surface-bright': '#eafef2',
+                        'surface-tint': '#436555',
+                        'surface-variant': '#d3e7dc',
+                        'surface-container-lowest': '#ffffff',
+                        'surface-container-low': '#e4f8ed',
+                        'surface-container': '#def3e7',
+                        'surface-container-high': '#d9ede1',
+                        'surface-container-highest': '#d3e7dc',
+                        'primary-container': '#1a3c2e',
+                        'primary-fixed': '#c5ebd7',
+                        'primary-fixed-dim': '#aacfbb',
+                        'on-primary': '#ffffff',
+                        'on-primary-container': '#82a794',
+                        'on-primary-fixed': '#002115',
+                        'on-primary-fixed-variant': '#2c4d3e',
+                        'inverse-on-surface': '#e1f6ea',
+                        secondary: '#9f4200',
+                        'secondary-container': '#fd8038',
+                        'secondary-fixed': '#ffdbcb',
+                        'secondary-fixed-dim': '#ffb691',
+                        'on-secondary': '#ffffff',
+                        'on-secondary-container': '#642700',
+                        'on-secondary-fixed': '#341100',
+                        'on-secondary-fixed-variant': '#793100',
+                        outline: '#727974',
+                        'outline-variant': '#c1c8c2',
+                        error: '#ba1a1a',
+                        'error-container': '#ffdad6',
+                        'on-error-container': '#93000a',
+                        'on-error': '#ffffff'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Newsreader"', 'serif'],
+                        'headline-xl': ['"Newsreader"', 'serif'],
+                        'headline-lg': ['"Newsreader"', 'serif'],
+                        'headline-md': ['"Newsreader"', 'serif'],
+                        'headline-sm': ['"Newsreader"', 'serif'],
+                        'title-lg': ['"Newsreader"', 'serif'],
+                        'body-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'body-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'body-sm': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-sm': ['"Plus Jakarta Sans"', 'sans-serif']
+                    },
+                    fontSize: {
+                        'headline-xl': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '500' }],
+                        'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.015em', fontWeight: '500' }],
+                        'headline-md': ['28px', { lineHeight: '36px', letterSpacing: '-0.01em', fontWeight: '500' }],
+                        'headline-sm': ['22px', { lineHeight: '30px', letterSpacing: '-0.005em', fontWeight: '600' }],
+                        'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+                        'body-lg': ['18px', { lineHeight: '28px', letterSpacing: '-0.005em', fontWeight: '400' }],
+                        'body-md': ['15px', { lineHeight: '24px', fontWeight: '400' }],
+                        'body-sm': ['13px', { lineHeight: '20px', fontWeight: '400' }],
+                        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.01em', fontWeight: '600' }],
+                        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.02em', fontWeight: '600' }],
+                        'label-sm': ['11px', { lineHeight: '14px', letterSpacing: '0.04em', fontWeight: '600' }]
+                    },
+                    spacing: {
+                        'space-xs': '0.25rem',
+                        'space-sm': '0.5rem',
+                        'space-md': '1rem',
+                        'space-lg': '1.5rem',
+                        'space-xl': '2.5rem',
+                        gutter: '1.5rem',
+                        'gutter-mobile': '1rem'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols (Stitch icon set) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-background font-body-md text-body-md text-on-surface antialiased selection:bg-accent selection:text-white">
+
+    <!-- SIDEBAR (Stitch fixed left rail, desktop only) -->
+    <aside
+        class="hidden lg:flex fixed left-0 top-0 h-full w-72 bg-primary-container text-on-primary-container z-50 flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.06)]">
+        <div class="flex flex-col">
+            <!-- Brand -->
+            <div class="h-20 px-space-lg flex items-center gap-space-sm bg-primary/40">
+                <div
+                    class="w-10 h-10 rounded-xl bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[22px]">school</span>
+                </div>
+                <div class="flex flex-col ml-space-xs">
+                    <span class="font-headline-sm text-headline-sm text-inverse-on-surface leading-none tracking-tight">Learnova</span>
+                    <span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase tracking-wider">LMS Portal</span>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="px-space-md py-space-sm">
+                <div class="px-space-sm py-space-xs mb-space-xs">
+                    <span class="font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Navigasi Utama</span>
+                </div>
+                <nav class="flex flex-col gap-space-xs">
+                    <a aria-current="page"
+                        class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-surface-container-highest text-primary font-label-lg rounded-xl"
+                        href="dashboard.html">
+                        <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a
+                        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg text-surface-container-highest/80 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="matakuliah.html">
+                        <span class="material-symbols-outlined text-[20px]">menu_book</span>
+                        <span>Mata Kuliah</span>
+                    </a>
+                    <a
+                        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg text-surface-container-highest/80 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="materi.html">
+                        <span class="material-symbols-outlined text-[20px]">auto_stories</span>
+                        <span>Materi</span>
+                    </a>
+                    <a
+                        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg text-surface-container-highest/80 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="tugas.html">
+                        <span class="material-symbols-outlined text-[20px]">assignment</span>
+                        <span>Tugas</span>
+                    </a>
+                    <a
+                        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg text-surface-container-highest/80 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="jadwal.html">
+                        <span class="material-symbols-outlined text-[20px]">event</span>
+                        <span>Jadwal</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- User Card -->
+        <div class="p-space-md">
+            <div class="p-space-md rounded-xl bg-primary/60 flex flex-col gap-space-xs">
+                <div class="flex items-center gap-space-sm">
+                    <div
+                        class="w-10 h-10 rounded-full bg-surface-container-highest text-primary flex items-center justify-center font-label-lg text-label-lg font-bold shrink-0">
+                        MI
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                        <span class="font-label-lg text-label-lg text-inverse-on-surface truncate" data-user-name>Muhammad Ilham</span>
+                        <span class="font-label-sm text-label-sm text-primary-fixed-dim truncate">Sistem dan Teknologi Informasi</span>
+                    </div>
+                </div>
+                <div class="pt-space-xs flex flex-col gap-space-xs">
+                    <div class="flex items-center justify-between text-on-primary-container">
+                        <span class="font-body-sm text-body-sm text-surface-container-highest/70">Semester Ganjil</span>
+                        <span
+                            class="px-space-xs py-0.5 rounded-full bg-secondary text-on-secondary font-label-sm text-[10px]">2026/2027</span>
+                    </div>
+                    <a
+                        class="mt-space-xs flex items-center justify-between px-space-sm py-space-xs rounded-lg text-surface-container-highest/90 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="index.html">
+                        <span class="font-label-md text-label-md">Keluar Akun</span>
+                        <span class="material-symbols-outlined text-[18px]">logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTENT WRAPPER -->
+    <div class="lg:pl-72">
+
+        <!-- TOP BAR -->
+        <header
+            class="fixed top-0 left-0 right-0 lg:left-72 z-40 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+            <div class="h-20 px-gutter lg:px-space-lg flex items-center justify-between gap-space-md">
+                <div class="flex items-center gap-space-md">
+                    <!-- Hamburger (mobile/tablet) -->
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 -ml-2 text-on-surface hover:text-primary focus:outline-none"
+                        aria-label="Toggle Menu">
+                        <span class="material-symbols-outlined text-[26px]">menu</span>
+                    </button>
+                    <!-- Semester Chip -->
+                    <div
+                        class="hidden sm:flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container text-on-surface">
+                        <span class="material-symbols-outlined text-[18px] text-surface-tint">school</span>
+                        <span class="font-label-md text-label-md font-medium">Semester Ganjil 2026/2027</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-space-md">
+                    <!-- Bell -> Papan Pengumuman -->
+                    <a href="#papan-pengumuman"
+                        class="relative p-2 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors"
+                        aria-label="Notifikasi">
+                        <span class="material-symbols-outlined text-[22px]">notifications</span>
+                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-secondary ring-2 ring-surface"></span>
+                    </a>
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">
+                        MI
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden lg:hidden bg-surface-container border-t border-outline-variant">
+                <div class="px-4 pt-2 pb-4 space-y-1">
+                    <a href="dashboard.html"
+                        class="block px-3 py-2 text-label-lg font-semibold text-primary bg-surface-container-highest rounded-xl">Dashboard</a>
+                    <a href="matakuliah.html"
+                        class="block px-3 py-2 text-label-lg text-on-surface hover:bg-surface-container-highest rounded-xl transition-colors">Mata
+                        Kuliah</a>
+                    <a href="materi.html"
+                        class="block px-3 py-2 text-label-lg text-on-surface hover:bg-surface-container-highest rounded-xl transition-colors">Materi</a>
+                    <a href="tugas.html"
+                        class="block px-3 py-2 text-label-lg text-on-surface hover:bg-surface-container-highest rounded-xl transition-colors">Tugas</a>
+                    <a href="jadwal.html"
+                        class="block px-3 py-2 text-label-lg text-on-surface hover:bg-surface-container-highest rounded-xl transition-colors">Jadwal</a>
+                    <div class="mt-3 pt-3 border-t border-outline-variant flex flex-col space-y-2 px-1">
+                        <a href="index.html"
+                            class="block w-full text-center border border-outline-variant text-on-surface-variant px-4 py-2.5 rounded-xl text-label-lg hover:bg-error-container hover:text-on-error-container hover:border-error transition-colors">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <main class="w-full pt-20 px-gutter lg:px-space-lg pb-space-xl min-h-screen bg-background">
+            <div class="flex flex-col w-full gap-space-lg pt-space-lg">
+
+                <!-- Editorial Salutation & Hero Header Section -->
+                <div class="relative overflow-hidden rounded-xl bg-surface-container-low p-space-lg shadow-sm">
+                    <div class="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-primary-fixed-dim/20 blur-3xl pointer-events-none">
+                    </div>
+                    <div class="absolute right-32 -bottom-16 w-56 h-56 rounded-full bg-secondary-fixed-dim/20 blur-2xl pointer-events-none">
+                    </div>
+                    <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+                        <div class="flex flex-col gap-space-xs max-w-2xl">
+                            <div class="flex items-center gap-space-xs flex-wrap">
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-primary-container text-inverse-on-surface font-label-sm text-label-sm">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-pulse"></span>
+                                    Tahun Ajaran Aktif
+                                </span>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Semester Ganjil
+                                    2026/2027</span>
+                            </div>
+                            <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">
+                                Selamat datang kembali, <span class="italic" data-user-name>Muhammad Ilham</span>.
+                            </h1>
+                            <p class="font-body-md text-body-md text-on-surface-variant">
+                                Mahasiswa Sistem dan Teknologi Informasi <span class="text-outline-variant">&bull;</span> Pantau
+                                materi, tugas, dan jadwal kuliah Anda dari satu tempat.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-space-sm shrink-0">
+                            <a
+                                class="inline-flex items-center gap-2 px-space-md py-2.5 rounded-xl bg-surface-container-highest text-on-primary-fixed hover:bg-surface-variant transition-all font-label-lg text-label-lg shadow-sm"
+                                href="matakuliah.html">
+                                <span class="material-symbols-outlined text-[18px]">menu_book</span>
+                                <span>Buka Mata Kuliah</span>
+                            </a>
+                            <a
+                                class="inline-flex items-center gap-2 px-space-md py-2.5 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-all font-label-lg text-label-lg shadow-md"
+                                href="tugas.html">
+                                <span class="material-symbols-outlined text-[18px]">upload_file</span>
+                                <span>Kumpulkan Tugas</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warm Academic Announcement Banner -->
+                <div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-space-md shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+                        <div class="flex items-start sm:items-center gap-space-md">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-secondary-container/20 text-secondary flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[24px]">campaign</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span
+                                        class="px-space-xs py-0.5 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm uppercase tracking-wide">Pengumuman
+                                        Akademik</span>
+                                    <span class="font-label-md text-label-md text-on-surface font-semibold">Selamat Datang di
+                                        Semester Ganjil 2026/2027</span>
+                                </div>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                                    Semester baru dimulai minggu ini. Silakan cek jadwal dan materi masing-masing mata kuliah.
+                                </p>
+                            </div>
+                        </div>
+                        <a href="#papan-pengumuman"
+                            class="text-secondary hover:text-on-secondary-container font-label-md text-label-md transition-colors flex items-center gap-1 self-end sm:self-center shrink-0">
+                            <span>Papan Pengumuman</span>
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Academic Metric Dossier Cards (4-Column) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+                    <!-- Card 1: Mata Kuliah Aktif -->
+                    <a class="group block rounded-xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-md transition-all"
+                        href="matakuliah.html">
+                        <div class="flex items-center justify-between mb-space-sm">
+                            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Beban
+                                Studi</span>
+                            <div
+                                class="w-8 h-8 rounded-lg bg-surface-container text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">menu_book</span>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span id="metric-courses"
+                                class="font-headline-md text-headline-md text-primary font-bold">7</span>
+                            <span class="font-label-md text-label-md text-on-surface-variant">Mata Kuliah Aktif</span>
+                        </div>
+                        <div class="mt-space-sm pt-space-xs flex flex-wrap gap-1" id="metric-course-chips">
+                            <span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-[10px]">Capstone</span>
+                            <span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-[10px]">Audit SI</span>
+                            <span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-[10px]">Big
+                                Data</span>
+                            <span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-[10px]">+4
+                                lainnya</span>
+                        </div>
+                    </a>
+
+                    <!-- Card 2: Rata-rata Progress -->
+                    <div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm">
+                        <div class="flex items-center justify-between mb-space-sm">
+                            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Rata-rata
+                                Progress</span>
+                            <div class="w-8 h-8 rounded-lg bg-surface-container text-primary flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[18px]">timeline</span>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span id="metric-progress"
+                                class="font-headline-md text-headline-md text-primary font-bold">41%</span>
+                            <span id="metric-progress-count" class="font-label-md text-label-md text-on-surface-variant">7 Mata
+                                Kuliah</span>
+                        </div>
+                        <div class="mt-space-sm">
+                            <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+                                <div id="metric-progress-bar" class="bg-primary h-full rounded-full transition-all duration-500"
+                                    style="width: 41%"></div>
+                            </div>
+                            <div class="flex justify-between items-center mt-1">
+                                <span class="font-label-sm text-[11px] text-on-surface-variant">Dihitung dari progress semua
+                                    matkul</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Tugas Belum Dikumpulkan -->
+                    <a class="group block rounded-xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-md transition-all"
+                        href="tugas.html">
+                        <div class="flex items-center justify-between mb-space-sm">
+                            <span
+                                class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Tenggat
+                                Terdekat</span>
+                            <div
+                                class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">pending_actions</span>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span id="metric-tugas"
+                                class="font-headline-md text-headline-md text-secondary font-bold">15</span>
+                            <span class="font-label-md text-label-md text-on-surface-variant">Tugas Aktif</span>
+                        </div>
+                        <div class="mt-space-sm pt-space-xs flex items-center gap-1.5 text-secondary">
+                            <span class="material-symbols-outlined text-[16px]">error_outline</span>
+                            <span id="metric-tugas-note" class="font-label-sm text-label-sm font-semibold">Tenggat terdekat: 15
+                                Okt</span>
+                        </div>
+                    </a>
+
+                    <!-- Card 4: Materi Tuntas -->
+                    <div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm">
+                        <div class="flex items-center justify-between mb-space-sm">
+                            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Materi
+                                Tuntas</span>
+                            <div
+                                class="w-8 h-8 rounded-lg bg-surface-container-highest text-surface-tint flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span id="metric-materi"
+                                class="font-headline-md text-headline-md text-primary font-bold">71%</span>
+                            <span class="font-label-md text-label-md text-on-surface-variant">Dari Total Modul</span>
+                        </div>
+                        <div class="mt-space-sm pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+                            <span id="metric-materi-note">10 dari 14 modul</span>
+                            <span class="text-surface-tint font-semibold">Target UTS: 50%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mata Kuliah Aktif -->
+                <section>
+                    <div class="flex justify-between items-end mb-space-sm px-space-xs">
+                        <div class="flex items-center gap-space-xs">
+                            <span class="material-symbols-outlined text-primary text-[22px]">school</span>
+                            <h2 class="font-title-lg text-title-lg text-primary">Mata Kuliah Aktif</h2>
+                        </div>
+                        <a class="font-label-md text-label-md text-surface-tint hover:text-primary transition-colors flex items-center gap-1"
+                            href="matakuliah.html">
+                            <span>Lihat Semua</span>
+                            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md" id="course-cards">
+                        <!-- Diisi dari API; lihat renderCourses() -->
+                    </div>
+                </section>
+
+                <!-- Main Asymmetric Workspace Layout (2 Columns) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+
+                    <!-- KOLOM KIRI (7 Kolom Grid Desktop) -->
+                    <div class="lg:col-span-7 flex flex-col gap-space-lg">
+
+                        <!-- Jadwal Kuliah Hari Ini -->
+                        <section class="flex flex-col gap-space-sm">
+                            <div class="flex items-center justify-between px-space-xs">
+                                <div class="flex items-center gap-space-xs">
+                                    <span class="material-symbols-outlined text-primary text-[22px]">event_note</span>
+                                    <h2 class="font-title-lg text-title-lg text-primary">Jadwal Kuliah Hari Ini</h2>
+                                    <span id="jadwal-day"
+                                        class="px-space-xs py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">&mdash;</span>
+                                </div>
+                                <a class="font-label-md text-label-md text-surface-tint hover:text-primary transition-colors flex items-center gap-1"
+                                    href="jadwal.html">
+                                    <span>Semua Jadwal</span>
+                                    <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                                </a>
+                            </div>
+                            <div id="jadwal-list" class="flex flex-col gap-space-sm"></div>
+                        </section>
+
+                        <!-- Materi Pembelajaran Terbaru -->
+                        <section class="flex flex-col gap-space-sm">
+                            <div class="flex items-center justify-between px-space-xs">
+                                <div class="flex items-center gap-space-xs">
+                                    <span class="material-symbols-outlined text-primary text-[22px]">auto_stories</span>
+                                    <h2 class="font-title-lg text-title-lg text-primary">Materi Pembelajaran Terbaru</h2>
+                                </div>
+                                <a class="font-label-md text-label-md text-surface-tint hover:text-primary transition-colors flex items-center gap-1"
+                                    href="materi.html">
+                                    <span>Daftar Modul</span>
+                                    <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                                </a>
+                            </div>
+                            <div class="flex flex-col gap-space-sm" id="materi-terbaru-list"><!-- Diisi dari API; lihat renderMateriTerbaru() -->
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- KOLOM KANAN (5 Kolom Grid Desktop) -->
+                    <div class="lg:col-span-5 flex flex-col gap-space-lg">
+
+                        <!-- Tugas & Tenggat Kritis -->
+                        <section class="flex flex-col gap-space-sm">
+                            <div class="flex items-center justify-between px-space-xs">
+                                <div class="flex items-center gap-space-xs">
+                                    <span class="material-symbols-outlined text-secondary text-[22px]">assignment</span>
+                                    <h2 class="font-title-lg text-title-lg text-primary">Tugas &amp; Tenggat Kritis</h2>
+                                </div>
+                                <a class="font-label-md text-label-md text-surface-tint hover:text-primary transition-colors flex items-center gap-1"
+                                    href="tugas.html">
+                                    <span>Semua Tugas</span>
+                                    <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                                </a>
+                            </div>
+                            <div id="tugas-list" class="flex flex-col gap-space-sm"></div>
+                        </section>
+
+                        <!-- Capaian Akademik (Radial Gauge) -->
+                        <div class="rounded-xl bg-primary-container text-inverse-on-surface p-space-lg shadow-md relative overflow-hidden">
+                            <div
+                                class="absolute -right-8 -bottom-8 w-40 h-40 bg-surface-tint/20 rounded-full blur-2xl pointer-events-none">
+                            </div>
+                            <div class="flex items-center justify-between mb-space-md">
+                                <div class="flex items-center gap-space-xs">
+                                    <span class="material-symbols-outlined text-primary-fixed-dim text-[20px]">donut_large</span>
+                                    <span
+                                        class="font-label-sm text-label-sm text-primary-fixed-dim uppercase tracking-wider">Capaian
+                                        Akademik</span>
+                                </div>
+                                <span class="font-label-md text-label-md text-primary-fixed">Semester Ganjil</span>
+                            </div>
+                            <div class="flex items-center gap-space-lg">
+                                <!-- Inline Radial Gauge Indicator (SVG) -->
+                                <div class="relative w-28 h-28 shrink-0 flex items-center justify-center">
+                                    <svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+                                        <circle class="text-surface-tint/30" cx="50" cy="50" fill="none" r="42"
+                                            stroke="currentColor" stroke-width="8"></circle>
+                                        <circle id="gauge-circle" class="text-secondary-fixed-dim transition-all duration-1000"
+                                            cx="50" cy="50" fill="none" r="42" stroke="currentColor" stroke-dasharray="263.89"
+                                            stroke-dashoffset="155.7" stroke-linecap="round" stroke-width="8"></circle>
+                                    </svg>
+                                    <div class="absolute flex flex-col items-center justify-center">
+                                        <span id="gauge-percent"
+                                            class="font-headline-sm text-headline-sm text-inverse-on-surface leading-none font-bold">41%</span>
+                                        <span class="font-label-sm text-[10px] text-primary-fixed-dim mt-0.5">Tuntas</span>
+                                    </div>
+                                </div>
+                                <!-- Metrik Deskriptif Capaian -->
+                                <div class="flex flex-col gap-2 min-w-0">
+                                    <h3 class="font-title-lg text-title-lg text-inverse-on-surface">Rata-rata Progress</h3>
+                                    <p id="gauge-desc" class="font-body-sm text-body-sm text-primary-fixed-dim">
+                                        Anda telah menuntaskan 10 dari 14 modul materi semester ini.
+                                    </p>
+                                    <div class="pt-1 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+                                        <span class="font-label-sm text-label-sm text-inverse-on-surface">Status Pembelajaran:
+                                            <strong class="text-secondary-fixed">Berjalan Lancar</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="mt-space-md pt-space-sm bg-primary/40 -mx-space-lg -mb-space-lg p-space-md flex items-center justify-between">
+                                <span id="gauge-summary" class="font-body-sm text-body-sm text-primary-fixed-dim">7 mata kuliah &bull; 14 modul</span>
+                                <a class="font-label-md text-label-md text-primary-fixed hover:text-surface-container-highest transition-colors flex items-center gap-1"
+                                    href="matakuliah.html">
+                                    <span>Buka Mata Kuliah</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Papan Pengumuman -->
+                        <section id="papan-pengumuman"
+                            class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm scroll-mt-24">
+                            <div class="flex items-center justify-between mb-space-md px-space-xs">
+                                <div class="flex items-center gap-space-xs">
+                                    <span class="material-symbols-outlined text-primary text-[22px]">campaign</span>
+                                    <h2 class="font-title-lg text-title-lg text-primary">Papan Pengumuman</h2>
+                                </div>
+                            </div>
+                            <div id="notifikasi-list" class="space-y-5"></div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- FOOTER SEDERHANA UNTUK DASHBOARD -->
+        <footer class="border-t border-outline-variant py-6 bg-surface-container-low">
+            <div
+                class="px-gutter lg:px-space-lg flex flex-col md:flex-row justify-between items-center gap-4 font-body-sm text-body-sm text-on-surface-variant">
+                <p>&copy; 2026 Learnova LMS &bull; Tugas Kelompok Big Data.</p>
+                <p>M. Adrian &bull; Egi Bayu S. &bull; M. Ilham</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        const API_BASE = window.API_BASE;
+        // User id dari sesi login (localStorage); fallback 1 bila dibuka tanpa login
+        const USER_ID = (() => {
+            try {
+                const u = JSON.parse(localStorage.getItem('learnova_user'));
+                return (u && u.id) ? u.id : 1;
+            } catch (e) { return 1; }
+        })();
+
+        let courseMap = {};
+
+        function showLoading(selector) {
+            const el = document.querySelector(selector);
+            if (el) el.innerHTML = '<div class="flex justify-center py-6 font-body-sm text-body-sm text-on-surface-variant">Memuat...</div>';
+        }
+
+        function showError(selector, message) {
+            const el = document.querySelector(selector);
+            if (el) el.innerHTML = `<div class="text-center py-6 text-error text-body-sm">${escapeHtml(message)}</div>`;
+        }
+
+        function formatDeadline(dateStr) {
+            const date = new Date(dateStr);
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            const options = { day: 'numeric', month: 'short' };
+            const formatted = date.toLocaleDateString('id-ID', options);
+
+            if (date.toDateString() === today.toDateString()) {
+                return `Hari ini, ${date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}`;
+            } else if (date.toDateString() === tomorrow.toDateString()) {
+                return `Besok, ${date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}`;
+            }
+            return formatted;
+        }
+
+        function getStatusBadgeClass(status) {
+            if (status === 'Belum Dikerjakan') return 'badge-stitch badge-stitch-warning';
+            if (status === 'Sedang Dikerjakan') return 'badge-stitch badge-stitch-urgent';
+            if (status === 'Sudah Dikumpulkan') return 'badge-stitch badge-stitch-completed';
+            return 'badge-stitch badge-stitch-academic';
+        }
+
+        function getNotificationDotClass(status) {
+            if (status === 'belum_dibaca') return 'bg-accent animate-pulse';
+            if (status === 'sudah_dibaca') return 'bg-primary/40';
+            return 'bg-gray-400';
+        }
+
+        function getCourseIcon(id) {
+            const icons = ['campaign', 'fact_check', 'dataset', 'inventory_2', 'storefront', 'shield', 'insights'];
+            return icons[(id - 1) % icons.length];
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function fetchDashboardData() {
+            showLoading('#course-cards');
+            showLoading('#tugas-list');
+            showLoading('#jadwal-list');
+            showLoading('#materi-terbaru-list');
+            showLoading('#notifikasi-list');
+
+            try {
+                const [coursesRes, progressRes, tugasRes, jadwalRes, notifRes, materiRes] = await Promise.all([
+                    fetch(`${API_BASE}/matakuliah`),
+                    fetch(`${API_BASE}/progress?user_id=${USER_ID}`),
+                    fetch(`${API_BASE}/tugas`),
+                    fetch(`${API_BASE}/jadwal`),
+                    fetch(`${API_BASE}/notifikasi?user_id=${USER_ID}`),
+                    fetch(`${API_BASE}/materi`)
+                ]);
+
+                const coursesData = await coursesRes.json();
+                const progressData = await progressRes.json();
+                const tugasData = await tugasRes.json();
+                const jadwalData = await jadwalRes.json();
+                const notifData = await notifRes.json();
+                const materiData = await materiRes.json();
+
+                if (!coursesData.success) throw new Error('Gagal memuat mata kuliah');
+                if (!progressData.success) throw new Error('Gagal memuat progress');
+                if (!tugasData.success) throw new Error('Gagal memuat tugas');
+                if (!jadwalData.success) throw new Error('Gagal memuat jadwal');
+                if (!notifData.success) throw new Error('Gagal memuat notifikasi');
+                if (!materiData.success) throw new Error('Gagal memuat materi');
+
+                coursesData.data.forEach(c => { courseMap[c.id] = c.name; });
+
+                const progressMap = {};
+                progressData.data.forEach(p => {
+                    progressMap[p.matakuliah_id] = p;
+                });
+
+                renderCourses(coursesData.data, progressMap);
+                renderTugas(tugasData.data);
+                renderJadwal(jadwalData.data);
+                renderMateriTerbaru(materiData.data);
+                renderNotifikasi(notifData.data);
+                renderMetrics(coursesData.data, progressMap, tugasData.data);
+
+            } catch (err) {
+                console.error('Dashboard fetch error:', err);
+                showError('#course-cards', 'Gagal memuat data dashboard. Server tidak dapat dihubungi.');
+                showError('#tugas-list', 'Gagal memuat tugas');
+                showError('#jadwal-list', 'Gagal memuat jadwal');
+                showError('#materi-terbaru-list', 'Gagal memuat materi terbaru');
+                showError('#notifikasi-list', 'Gagal memuat notifikasi');
+            }
+        }
+
+        function renderMetrics(courses, progressMap, tugas) {
+            const set = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text;
+            };
+
+            set('metric-courses', courses.length);
+            set('metric-progress-count', courses.length + ' Mata Kuliah');
+
+            const chips = document.getElementById('metric-course-chips');
+            if (chips) {
+                const labels = courses.slice(0, 3).map(c => shortCourseName(c.name));
+                const rest = courses.length - labels.length;
+                chips.innerHTML = labels.map(l =>
+                    `<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-[10px]">${escapeHtml(l)}</span>`
+                ).join('') + (rest > 0
+                    ? `<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-[10px]">+${rest} lainnya</span>`
+                    : '');
+            }
+
+            const pcts = courses.map(c => progressMap[c.id] ? progressMap[c.id].persentase : 0);
+            const avg = pcts.length ? Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length) : 0;
+            set('metric-progress', avg + '%');
+            const bar = document.getElementById('metric-progress-bar');
+            if (bar) bar.style.width = avg + '%';
+
+            const active = tugas
+                .filter(t => t.status !== 'Sudah Dikumpulkan')
+                .slice()
+                .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+            set('metric-tugas', active.length);
+            if (active.length > 0) {
+                set('metric-tugas-note', 'Tenggat terdekat: ' + formatDeadline(active[0].deadline));
+            } else {
+                set('metric-tugas-note', 'Semua tugas sudah dikumpulkan');
+            }
+
+            const totalMat = courses.reduce((s, c) => s + c.total_materials, 0);
+            const doneMat = courses.reduce((s, c) => s + (progressMap[c.id] ? progressMap[c.id].completed_materials : 0), 0);
+            const matPct = totalMat ? Math.round((doneMat / totalMat) * 100) : 0;
+            set('metric-materi', matPct + '%');
+            set('metric-materi-note', doneMat + ' dari ' + totalMat + ' modul');
+            set('gauge-summary', courses.length + ' mata kuliah \u2022 ' + totalMat + ' modul');
+
+            set('gauge-percent', avg + '%');
+            const circle = document.getElementById('gauge-circle');
+            if (circle) {
+                const circ = 263.89;
+                circle.style.strokeDashoffset = (circ - (avg / 100) * circ).toFixed(1);
+            }
+            set('gauge-desc', `Anda telah menuntaskan ${doneMat} dari ${totalMat} modul materi semester ini.`);
+        }
+
+        function renderCourses(courses, progressMap) {
+            const container = document.getElementById('course-cards');
+            if (!container) return;
+
+            container.innerHTML = courses.map(course => {
+                const progress = progressMap[course.id] || { persentase: 0, completed_materials: 0, completed_tasks: 0 };
+                const percent = progress.persentase;
+
+                return `
+        <div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-md transition-all flex flex-col gap-3">
+            <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-9 h-9 rounded-lg bg-surface-container text-primary flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">${getCourseIcon(course.id)}</span>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                        <h3 class="font-title-lg text-title-lg text-primary truncate">${escapeHtml(course.name)}</h3>
+                        <p class="font-body-sm text-body-sm text-on-surface-variant truncate">${escapeHtml(course.lecturer)}</p>
+                    </div>
+                </div>
+                <span class="badge-stitch ${percent < 50 ? 'badge-stitch-warning' : 'badge-stitch-academic'}">${percent}%</span>
+            </div>
+
+            <div class="progress-stitch">
+                <div class="progress-stitch-bar ${percent < 50 ? 'active' : 'submitted'}" style="width: ${percent}%"></div>
+            </div>
+
+            <div class="flex gap-4 font-label-md text-label-md text-on-surface-variant border-t border-outline-variant pt-3">
+                <span class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-surface-tint">menu_book</span>
+                    ${progress.completed_materials}/${course.total_materials} Materi
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-surface-tint">task</span>
+                    ${progress.completed_tasks}/${course.total_tasks} Tugas
+                </span>
+            </div>
+        </div>
+        `;
+            }).join('');
+        }
+
+        // 3 materi terbaru (urutan insert terakhir dari API) untuk daftar cepat
+        function renderMateriTerbaru(materi) {
+            const container = document.getElementById('materi-terbaru-list');
+            if (!container) return;
+
+            const latest = materi.slice(-3).reverse();
+            if (latest.length === 0) {
+                container.innerHTML = '<div class="rounded-xl bg-surface-container-lowest p-space-md text-center font-body-sm text-body-sm text-on-surface-variant">Belum ada materi</div>';
+                return;
+            }
+
+            const iconBoxes = [
+                'bg-primary-container text-inverse-on-surface',
+                'bg-surface-container text-surface-tint',
+                'bg-secondary-container/20 text-secondary'
+            ];
+            const typeIcon = t => t === 'Video' ? 'smart_display' : (t === 'PDF' ? 'picture_as_pdf' : 'article');
+            const typeLabel = t => t === 'PDF' ? 'Dokumen Handout Kuliah' : (t === 'Video' ? 'Rekaman Kuliah' : 'Modul Bacaan');
+
+            container.innerHTML = latest.map((m, idx) => {
+                const isVideo = m.tipe === 'Video';
+                const read = m.status_baca === 'Sudah Dibaca';
+                return `
+        <a href="materi.html" class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+            <div class="flex items-start gap-space-md">
+                <div class="w-12 h-12 rounded-xl ${iconBoxes[idx % 3]} flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[24px]">${typeIcon(m.tipe)}</span>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                        <span class="font-label-sm text-label-sm ${idx === 2 ? 'text-secondary' : 'text-surface-tint'} font-bold">${escapeHtml(shortCourseName(courseMap[m.matakuliah_id] || 'Mata Kuliah'))}</span>
+                        <span class="text-outline-variant">&bull;</span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Pertemuan ${String(m.pertemuan || 1).padStart(2, '0')}</span>
+                    </div>
+                    <h4 class="font-label-lg text-label-lg text-on-surface font-semibold mt-0.5">${escapeHtml(m.judul)}</h4>
+                    <div class="flex items-center gap-3 mt-1 font-body-sm text-body-sm text-on-surface-variant">
+                        <span>${typeLabel(m.tipe)}</span>
+                        <span class="text-outline-variant">&bull;</span>
+                        <span class="${read ? 'text-surface-tint' : 'text-secondary'} font-medium">${escapeHtml(m.status_baca)}</span>
+                    </div>
+                </div>
+            </div>
+            <span class="px-space-sm py-2 rounded-lg bg-surface-container text-primary font-label-md text-label-md flex items-center gap-1.5 self-end sm:self-center">${isVideo ? 'Tonton' : 'Baca'}</span>
+        </a>
+    `;
+            }).join('');
+        }
+
+        function renderTugas(tugas) {
+            const container = document.getElementById('tugas-list');
+            if (!container) return;
+
+            const upcoming = tugas
+                .filter(t => t.status !== 'Sudah Dikumpulkan')
+                .slice(0, 2);
+
+            if (upcoming.length === 0) {
+                container.innerHTML = '<div class="rounded-xl bg-surface-container-lowest p-space-md text-center font-body-sm text-body-sm text-on-surface-variant">Tidak ada tugas mendatang</div>';
+                return;
+            }
+
+            container.innerHTML = upcoming.map(task => `
+        <a href="tugas.html" class="block rounded-xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-start justify-between gap-2">
+                <span class="${getStatusBadgeClass(task.status)} whitespace-nowrap">${escapeHtml(task.status)}</span>
+                <span class="font-label-sm text-label-sm text-secondary font-semibold">${formatDeadline(task.deadline)}</span>
+            </div>
+            <h4 class="font-label-lg text-label-lg text-on-surface font-bold mt-space-xs">${escapeHtml(task.judul)}</h4>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Mata Kuliah: <span
+                    class="font-medium text-on-surface">${escapeHtml(getCourseName(task.matakuliah_id))}</span></p>
+            <div class="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant">
+                <span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">schedule</span>
+                    Pertemuan ${task.pertemuan || '-'}
+                </span>
+                <span class="font-label-md text-label-md text-surface-tint hover:text-primary transition-colors flex items-center gap-1">
+                    <span>Lihat Tugas</span>
+                    <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+                </span>
+            </div>
+        </a>
+    `).join('');
+        }
+
+        function renderJadwal(jadwal) {
+            const container = document.getElementById('jadwal-list');
+            if (!container) return;
+
+            const today = new Date().toLocaleDateString('id-ID', { weekday: 'long' });
+            const dayEl = document.getElementById('jadwal-day');
+            if (dayEl) dayEl.textContent = today;
+
+            const todayJadwal = jadwal.filter(j => j.hari.toLowerCase() === today.toLowerCase());
+
+            if (todayJadwal.length === 0) {
+                container.innerHTML = '<div class="rounded-xl bg-surface-container-lowest p-space-md text-center font-body-sm text-body-sm text-on-surface-variant">Tidak ada jadwal hari ini</div>';
+                return;
+            }
+
+            container.innerHTML = todayJadwal.map((item, idx) => `
+        <div class="rounded-xl bg-surface-container-lowest p-space-lg shadow-sm relative overflow-hidden">
+            <div class="absolute left-0 top-0 bottom-0 w-1.5 ${idx === 0 ? 'bg-secondary' : 'bg-outline-variant'}"></div>
+            <div class="flex items-center gap-2 mb-1">
+                <span class="px-2 py-0.5 rounded-full font-label-sm text-label-sm ${idx === 0 ? 'bg-secondary-container/20 text-secondary font-bold' : 'bg-surface-container text-on-surface-variant'}">${idx === 0 ? 'Berikutnya' : 'Mendatang'}</span>
+                <span class="font-label-sm text-label-sm text-on-surface-variant font-medium">${escapeHtml(item.hari)}</span>
+            </div>
+                <h3 class="font-title-lg text-title-lg text-on-surface mt-1">${escapeHtml(getCourseName(item.matakuliah_id))}</h3>
+            <div class="flex flex-wrap items-center gap-space-md mt-space-sm font-label-md text-label-md text-on-surface-variant">
+                <span class="flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[18px] text-surface-tint">schedule</span>
+                    ${escapeHtml(item.jam_mulai)} - ${escapeHtml(item.jam_selesai)} WIB
+                </span>
+                <span class="flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[18px] text-surface-tint">meeting_room</span>
+                    ${escapeHtml(item.ruang)}
+                </span>
+            </div>
+        </div>
+    `).join('');
+        }
+
+        function renderNotifikasi(notifikasi) {
+            const container = document.getElementById('notifikasi-list');
+            if (!container) return;
+
+            if (notifikasi.length === 0) {
+                container.innerHTML = '<div class="text-center py-4 font-body-sm text-body-sm text-on-surface-variant">Tidak ada notifikasi</div>';
+                return;
+            }
+
+            container.innerHTML = notifikasi.slice(0, 3).map(notif => `
+        <div class="flex gap-3.5 items-start">
+            <div class="w-2.5 h-2.5 rounded-full ${getNotificationDotClass(notif.status)} mt-1.5 flex-shrink-0 shadow-sm"></div>
+            <div>
+                <p class="font-label-lg text-label-lg text-on-surface font-bold mb-0.5">${escapeHtml(notif.judul)}</p>
+                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">${escapeHtml(notif.pesan)}</p>
+            </div>
+        </div>
+    `).join('');
+        }
+
+        function getCourseName(id) {
+            return courseMap[id] || `Mata Kuliah ${id}`;
+        }
+
+        // Nama pendek untuk chip metrik (7 MK baru tetap muat 1 baris)
+        const shortCourseNames = {
+            'Seminar Capstone Project': 'Capstone',
+            'Audit System & IT Governance': 'Audit SI',
+            'Big Data': 'Big Data',
+            'Enterprise Resource Planning (ERP)': 'ERP',
+            'Kewirausahaan': 'Kewirausahaan',
+            'Manajemen Resiko': 'Manajemen Resiko',
+            'Sistem Pendukung Keputusan dan Eksekutif': 'SPKE'
+        };
+
+        function shortCourseName(name) {
+            return shortCourseNames[name] || name;
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchDashboardData);
+    </script>
+</body>
+
+</html>

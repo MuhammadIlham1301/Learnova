@@ -1,0 +1,452 @@
+/* ==========================================================================
+   Learnova — Stitch Design System Foundation
+   CSS Custom Properties + Reusable Component Classes
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS Custom Properties (Design Tokens from Stitch)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color — Stitch Semantic Palette */
+  --color-background: #eafef2;           /* mint surface (Stitch background) */
+  --color-surface: #ffffff;              /* archival white */
+  --color-surface-container: #def3e7;    /* surface-container */
+  --color-primary: #022619;              /* near-black forest (Stitch primary) */
+  --color-primary-container: #1a3c2e;    /* forest academic green (Stitch primary-container) */
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #82a794;
+  --color-secondary: #9f4200;            /* terracotta dark (Stitch secondary) */
+  --color-secondary-container: #fd8038;  /* terracotta light (Stitch secondary-container) */
+  --color-on-secondary: #ffffff;
+  --color-tertiary: #232119;
+  --color-tertiary-container: #39362e;
+  --color-outline: #727974;
+  --color-outline-variant: #c1c8c2;
+  --color-success: #2e7d32;              /* olive emerald */
+  --color-warning: #d97706;              /* warm amber */
+  --color-critical: #c2410c;             /* deep burnt rust */
+  --color-error: #ba1a1a;
+
+  /* Elevation — Stitch Atmospheric Shadows (tinted forest green) */
+  --shadow-stitch-1: 0 4px 20px -2px rgba(26, 60, 46, 0.05);
+  --shadow-stitch-2: 0 8px 28px -4px rgba(26, 60, 46, 0.09);
+  --shadow-stitch-3: 0 16px 40px -8px rgba(26, 60, 46, 0.16);
+  --shadow-stitch-modal: 0 16px 40px -8px rgba(26, 60, 46, 0.16);
+
+  /* Border — Stitch Bookbinder Edge */
+  --border-stitch: 1px solid rgba(227, 218, 205, 0.8);
+  --border-stitch-subtle: 1px solid rgba(26, 60, 46, 0.08);
+
+  /* Border Radius — Stitch Geometry Hierarchy */
+  --radius-sm: 0.25rem;      /* 4px */
+  --radius-default: 0.5rem;  /* 8px */
+  --radius-md: 0.75rem;      /* 12px */
+  --radius-lg: 1rem;         /* 16px */
+  --radius-xl: 1.5rem;       /* 24px — major panels/cards */
+  --radius-full: 9999px;     /* pills/badges */
+  --radius-card: var(--radius-xl);       /* 24px */
+  --radius-input: var(--radius-md);      /* 12px */
+  --radius-button: var(--radius-lg);     /* 16px */
+  --radius-badge: var(--radius-full);    /* pill */
+
+  /* Spacing — Stitch Spacing Principles */
+  --space-xs: 0.25rem;   /* 4px */
+  --space-sm: 0.5rem;    /* 8px */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2.5rem;    /* 40px */
+  --space-card-pad: var(--space-lg);     /* 24px card padding */
+  --gutter: 1.5rem;       /* 24px desktop gutter */
+  --gutter-mobile: 1rem;  /* 16px mobile gutter */
+  --margin: 2.5rem;       /* 40px section margin */
+  --margin-mobile: 1.25rem; /* 20px mobile margin */
+
+  /* Typography — Stitch Font Families */
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Newsreader", serif;
+}
+
+/* --------------------------------------------------------------------------
+   Base / Global
+   -------------------------------------------------------------------------- */
+/* Smooth scrolling untuk link internal (anchor links) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Background — Stitch mint canvas (opt-in via .bg-stitch on <body> or html) */
+.bg-stitch {
+  background-color: var(--color-background);
+}
+
+/* --------------------------------------------------------------------------
+   Scrollbar — Stitch Colors
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-container);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-outline-variant) var(--color-background);
+}
+
+/* Utility: hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* --------------------------------------------------------------------------
+   Card System — Stitch Course/Module/Featured Cards
+   -------------------------------------------------------------------------- */
+.card-stitch {
+  background: var(--color-surface);
+  border: var(--border-stitch);
+  border-radius: var(--radius-card);
+  padding: var(--space-card-pad);
+  box-shadow: var(--shadow-stitch-1);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-stitch:hover {
+  box-shadow: var(--shadow-stitch-2);
+  border-color: rgba(26, 60, 46, 0.15);
+}
+
+/* Featured variant: 3px top border in primary */
+.card-stitch-featured {
+  border-top: 3px solid var(--color-primary);
+}
+
+/* Interactive variant: lift on hover */
+.card-stitch-interactive {
+  cursor: pointer;
+  transform: translateY(0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-stitch-interactive:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-stitch-2);
+}
+
+/* --------------------------------------------------------------------------
+   Button System — Stitch Button Variants
+   -------------------------------------------------------------------------- */
+/* Shared button base */
+.btn-stitch {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;          /* label-lg: 14px */
+  font-weight: 600;
+  line-height: 1.43;
+  letter-spacing: 0.01em;
+  padding: 0.75rem 1.5rem;      /* ~py-3 px-6 */
+  border-radius: var(--radius-button);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-stitch:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Primary Scholarly Action — Forest Green */
+.btn-stitch-primary {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-stitch-1);
+}
+
+.btn-stitch-primary:hover {
+  background: #234d3c;
+  box-shadow: var(--shadow-stitch-2);
+}
+
+.btn-stitch-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Accent Deadline Action — Terracotta */
+.btn-stitch-accent {
+  background: var(--color-secondary-container);
+  color: var(--color-on-secondary);
+  box-shadow: var(--shadow-stitch-1);
+}
+
+.btn-stitch-accent:hover {
+  background: #e85d00;
+  box-shadow: var(--shadow-stitch-2);
+}
+
+.btn-stitch-accent:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Secondary / Ghost — Transparent with border */
+.btn-stitch-ghost {
+  background: transparent;
+  color: var(--color-primary-container);
+  border: 1px solid rgba(26, 60, 46, 0.15);
+  box-shadow: none;
+}
+
+.btn-stitch-ghost:hover {
+  background: #ede6da;
+  border-color: var(--color-primary-container);
+}
+
+/* --------------------------------------------------------------------------
+   Input Fields — Stitch Standard Text Fields
+   -------------------------------------------------------------------------- */
+.input-stitch {
+  background: var(--color-surface);
+  border: 1px solid rgba(227, 218, 205, 1.0);
+  border-radius: var(--radius-input);
+  color: #11221b;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;          /* body-sm ~14px */
+  padding: 0.75rem 1rem;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input-stitch:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary);
+  background: var(--color-surface);
+}
+
+.input-stitch::placeholder {
+  color: #5c6e64;               /* sage slate */
+}
+
+.input-stitch:disabled {
+  background: var(--color-surface-container);
+  color: var(--color-outline);
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   Badge/Chip System — Stitch Status Pills & Academic Tags
+   -------------------------------------------------------------------------- */
+.badge-stitch {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;     /* 4px 12px */
+  border-radius: var(--radius-badge);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;           /* label-md: 12px */
+  font-weight: 600;
+  line-height: 1.33;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Academic Tags — Linen background, forest text */
+.badge-stitch-academic {
+  background: #ede6da;
+  color: var(--color-primary-container);
+  border: 1px solid rgba(227, 218, 205, 0.8);
+}
+
+/* Urgent Milestones — Terracotta tint */
+.badge-stitch-urgent {
+  background: rgba(212, 98, 26, 0.12);
+  color: #d4621a;
+  border: 1px solid rgba(212, 98, 26, 0.25);
+}
+
+/* Completed / Graded — Olive emerald tint */
+.badge-stitch-completed {
+  background: rgba(46, 125, 50, 0.12);
+  color: #2e7d32;
+  border: 1px solid rgba(46, 125, 50, 0.25);
+}
+
+/* Overdue — Deep burnt rust tint */
+.badge-stitch-overdue {
+  background: rgba(194, 65, 12, 0.12);
+  color: #c2410c;
+  border: 1px solid rgba(194, 65, 12, 0.25);
+}
+
+/* Warning — Warm amber tint */
+.badge-stitch-warning {
+  background: rgba(217, 119, 6, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Filter Chips — Stitch Search/Filter Rails (Pill-shaped)
+   -------------------------------------------------------------------------- */
+.chip-stitch {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 1rem;       /* ~6px 16px */
+  border-radius: var(--radius-badge);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.33;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  background: #ede6da;          /* linen */
+  color: var(--color-primary-container);
+  text-decoration: none;
+}
+
+.chip-stitch:hover {
+  background: #d9d1c7;
+}
+
+.chip-stitch-active {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  box-shadow: var(--shadow-stitch-1);
+}
+
+/* --------------------------------------------------------------------------
+   Progress Bar — Stitch Assignment Milestone Tracker (6px rail)
+   -------------------------------------------------------------------------- */
+.progress-stitch {
+  height: 6px;
+  border-radius: 3px;
+  background: #ede6da;          /* linen rail */
+  overflow: hidden;
+}
+
+.progress-stitch-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.progress-stitch-bar.active {
+  background: #d4621a;          /* terracotta — in progress */
+}
+
+.progress-stitch-bar.submitted {
+  background: #1a3c2e;          /* forest — submitted */
+}
+
+.progress-stitch-bar.completed {
+  background: #2e7d32;          /* olive — fully completed/graded */
+}
+
+/* --------------------------------------------------------------------------
+   Modal / Overlay — Stitch Overlay & Modals (Level 3)
+   -------------------------------------------------------------------------- */
+.modal-stitch-backdrop {
+  background: rgba(17, 34, 27, 0.40);
+  backdrop-filter: blur(4px);
+}
+
+.modal-stitch {
+  background: var(--color-surface);
+  border: var(--border-stitch);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-stitch-modal);
+  padding: var(--space-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Focus Ring Utility — Stitch Focus State (2px ring, primary)
+   -------------------------------------------------------------------------- */
+.focus-stitch:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Typography Helpers (opt-in, for non-Tailwind contexts)
+   -------------------------------------------------------------------------- */
+.text-stitch-display {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-stitch-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.text-stitch-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.text-stitch-body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-stitch-caption {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Container Helper (max-width + centered)
+   -------------------------------------------------------------------------- */
+.container-stitch {
+  max-width: 80rem;             /* 1280px ≈ Tailwind max-w-7xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+@media (max-width: 1024px) {
+  .container-stitch {
+    padding-left: var(--gutter-mobile);
+    padding-right: var(--gutter-mobile);
+  }
+}

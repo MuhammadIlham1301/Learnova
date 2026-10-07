@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learnova - LMS for Modern Students</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Learnova legacy aliases (token values aligned with Stitch)
+                        primary: '#022619',
+                        accent: '#D4621A',
+                        base: '#F5F0E8',
+                        surface: '#eafef2',
+                        border: '#C8D5CC',
+                        // Stitch semantic palette
+                        background: '#eafef2',
+                        'on-surface': '#0e1f18',
+                        'on-surface-variant': '#414844',
+                        'surface-dim': '#cbdfd3',
+                        'surface-bright': '#eafef2',
+                        'surface-tint': '#436555',
+                        'surface-variant': '#d3e7dc',
+                        'surface-container-lowest': '#ffffff',
+                        'surface-container-low': '#e4f8ed',
+                        'surface-container': '#def3e7',
+                        'surface-container-high': '#d9ede1',
+                        'surface-container-highest': '#d3e7dc',
+                        'primary-container': '#1a3c2e',
+                        'primary-fixed': '#c5ebd7',
+                        'primary-fixed-dim': '#aacfbb',
+                        'on-primary': '#ffffff',
+                        'on-primary-container': '#82a794',
+                        'on-primary-fixed': '#002115',
+                        'on-primary-fixed-variant': '#2c4d3e',
+                        'inverse-on-surface': '#e1f6ea',
+                        secondary: '#9f4200',
+                        'secondary-container': '#fd8038',
+                        'secondary-fixed': '#ffdbcb',
+                        'secondary-fixed-dim': '#ffb691',
+                        'on-secondary': '#ffffff',
+                        'on-secondary-container': '#642700',
+                        'on-secondary-fixed': '#341100',
+                        'on-secondary-fixed-variant': '#793100',
+                        outline: '#727974',
+                        'outline-variant': '#c1c8c2',
+                        error: '#ba1a1a',
+                        'error-container': '#ffdad6',
+                        'on-error-container': '#93000a',
+                        'on-error': '#ffffff'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Newsreader"', 'serif'],
+                        'headline-xl': ['"Newsreader"', 'serif'],
+                        'headline-lg': ['"Newsreader"', 'serif'],
+                        'headline-md': ['"Newsreader"', 'serif'],
+                        'headline-sm': ['"Newsreader"', 'serif'],
+                        'title-lg': ['"Newsreader"', 'serif'],
+                        'body-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'body-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'body-sm': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-sm': ['"Plus Jakarta Sans"', 'sans-serif']
+                    },
+                    fontSize: {
+                        'headline-xl': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '500' }],
+                        'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.015em', fontWeight: '500' }],
+                        'headline-md': ['28px', { lineHeight: '36px', letterSpacing: '-0.01em', fontWeight: '500' }],
+                        'headline-sm': ['22px', { lineHeight: '30px', letterSpacing: '-0.005em', fontWeight: '600' }],
+                        'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+                        'body-lg': ['18px', { lineHeight: '28px', letterSpacing: '-0.005em', fontWeight: '400' }],
+                        'body-md': ['15px', { lineHeight: '24px', fontWeight: '400' }],
+                        'body-sm': ['13px', { lineHeight: '20px', fontWeight: '400' }],
+                        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.01em', fontWeight: '600' }],
+                        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.02em', fontWeight: '600' }],
+                        'label-sm': ['11px', { lineHeight: '14px', letterSpacing: '0.04em', fontWeight: '600' }]
+                    },
+                    spacing: {
+                        'space-xs': '0.25rem',
+                        'space-sm': '0.5rem',
+                        'space-md': '1rem',
+                        'space-lg': '1.5rem',
+                        'space-xl': '2.5rem',
+                        gutter: '1.5rem',
+                        'gutter-mobile': '1rem'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols (Stitch icon set) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body
+    class="bg-stitch text-on-surface font-sans antialiased flex flex-col min-h-screen selection:bg-accent selection:text-white">
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-50 h-20 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/60 shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+        <div class="container-stitch h-20 flex items-center justify-between gap-4">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-baseline gap-2">
+                <span class="text-2xl font-serif font-bold text-primary tracking-tight">Learnova.</span>
+                <span class="hidden sm:inline font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">LMS Portal</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#beranda" class="font-label-lg text-label-lg text-primary font-bold transition-colors">Beranda</a>
+                <a href="#fitur"
+                    class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">Fitur</a>
+                <a href="#mata-kuliah"
+                    class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">Mata
+                    Kuliah</a>
+            </div>
+
+            <!-- Desktop Actions -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="login.html" class="btn-stitch btn-stitch-ghost text-sm">Masuk</a>
+                <a href="login.html" class="btn-stitch btn-stitch-accent text-sm">Daftar</a>
+            </div>
+
+            <!-- Hamburger Menu Button -->
+            <div class="flex items-center md:hidden">
+                <button id="mobile-menu-btn" class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors focus:outline-none"
+                    aria-label="Toggle Menu">
+                    <span class="material-symbols-outlined text-[26px]">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-surface-container-low border-b border-outline-variant/60">
+            <div class="container-stitch py-4 space-y-1">
+                <a href="#beranda"
+                    class="block px-3 py-2 rounded-lg font-label-lg text-label-lg text-primary font-bold hover:bg-surface-container transition-colors">Beranda</a>
+                <a href="#fitur"
+                    class="block px-3 py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors">Fitur</a>
+                <a href="#mata-kuliah"
+                    class="block px-3 py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors">Mata
+                    Kuliah</a>
+                <div class="pt-3 mt-2 border-t border-outline-variant/60 flex flex-col gap-2 px-3">
+                    <a href="login.html" class="btn-stitch btn-stitch-ghost text-center text-sm w-full">Masuk</a>
+                    <a href="login.html" class="btn-stitch btn-stitch-accent text-center text-sm w-full">Daftar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="flex-grow flex flex-col">
+
+        <!-- Top Subtle Announcement Bar -->
+        <div class="w-full bg-surface-container py-2.5 px-4 sm:px-6 lg:px-12">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+                    <span class="font-label-md text-label-md text-on-surface tracking-wide uppercase">Semester Ganjil 2026/2027 Aktif</span>
+                    <span class="hidden sm:inline text-outline-variant text-body-sm">|</span>
+                    <span class="hidden sm:inline font-body-sm text-body-sm text-on-surface-variant">Selamat datang kembali di portal belajar Learnova.</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="#mata-kuliah" class="font-label-sm text-label-sm text-primary hover:text-secondary transition-colors underline decoration-dotted">Lihat Mata Kuliah &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- HERO SECTION (Editorial Composition) -->
+        <section id="beranda" class="w-full relative overflow-hidden py-12 lg:py-16 px-4 sm:px-6 lg:px-12 bg-surface">
+            <!-- Subtle Ambient Graphic Behind Hero Content -->
+            <div class="absolute -top-32 right-0 w-[620px] h-[620px] bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-96 -left-20 w-[420px] h-[420px] bg-secondary-container/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative">
+                <!-- Left Editorial Narrative (7 Columns) -->
+                <div class="lg:col-span-7 flex flex-col gap-6">
+                    <div class="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full bg-surface-container-high text-primary">
+                        <span class="material-symbols-outlined text-[16px] text-secondary">auto_stories</span>
+                        <span class="font-label-md text-label-md tracking-wider uppercase">Learning Management System Mahasiswa</span>
+                    </div>
+                    <h1 class="font-headline-xl text-headline-xl text-primary leading-tight">
+                        Pendidikan Modern, <br>
+                        <span class="italic text-primary/80">Tanpa Batas Ruang.</span>
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                        Learnova adalah Learning Management System yang dirancang khusus untuk mahasiswa cerdas. Akses materi,
+                        kelola tugas, dan pantau progress belajar dalam satu platform premium.
+                    </p>
+
+                    <!-- CTA Action Cluster -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="login.html" class="btn-stitch btn-stitch-accent">
+                            <span>Masuk ke Kelas</span>
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </a>
+                        <a href="#fitur" class="btn-stitch btn-stitch-ghost">
+                            <span class="material-symbols-outlined text-[18px]">key</span>
+                            <span>Pelajari Fitur</span>
+                        </a>
+                    </div>
+
+                    <!-- Academic Metrics -->
+                    <div class="pt-4 mt-2 flex flex-wrap items-center gap-6 sm:gap-8 text-on-surface">
+                        <div class="flex flex-col">
+                            <span class="font-headline-md text-headline-md text-primary font-bold">7</span>
+                            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Mata Kuliah Aktif</span>
+                        </div>
+                        <div class="h-8 w-px bg-surface-variant"></div>
+                        <div class="flex flex-col">
+                            <span class="font-headline-md text-headline-md text-primary font-bold">14</span>
+                            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Materi Tersedia</span>
+                        </div>
+                        <div class="h-8 w-px bg-surface-variant"></div>
+                        <div class="flex flex-col">
+                            <span class="font-headline-md text-headline-md text-primary font-bold">41%</span>
+                            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Rata-rata Progress</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Dashboard Showcase Widget (5 Columns) -->
+                <div class="lg:col-span-5 relative">
+                    <div class="bg-surface-container-lowest rounded-xl p-6 shadow-xl flex flex-col gap-5 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 right-0 h-1.5 bg-primary"></div>
+
+                        <!-- Student Profile Header -->
+                        <div class="flex items-center justify-between pt-1">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-headline-sm text-primary">
+                                    ML
+                                </div>
+                                <div>
+                                    <h4 class="font-title-lg text-title-lg text-primary leading-snug">Mahasiswa Learnova</h4>
+                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Semester Ganjil 2026/2027</p>
+                                </div>
+                            </div>
+                            <div class="text-right bg-surface-container-low px-3 py-1.5 rounded-lg">
+                                <div class="font-label-sm text-label-sm uppercase text-on-surface-variant">Mata Kuliah</div>
+                                <div class="font-headline-sm text-headline-sm text-primary font-bold">7 <span class="text-body-sm font-normal text-on-surface-variant">/ Aktif</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Active Course Progress List -->
+                        <div class="flex flex-col gap-3">
+                            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Mata Kuliah Semester Berjalan</span>
+
+                            <div class="p-3 rounded-lg bg-surface hover:bg-surface-container transition-colors flex items-center justify-between">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+                                        <span class="material-symbols-outlined text-[20px]">fact_check</span>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="font-title-lg text-[15px] text-primary truncate">Audit System &amp; IT Governance</div>
+                                        <div class="font-body-sm text-body-sm text-on-surface-variant truncate">NUR CHALIK AZHAR, M.Kom</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 shrink-0">
+                                    <div class="w-20 bg-surface-container-highest rounded-full h-2">
+                                        <div class="bg-secondary h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                    <span class="font-label-sm text-label-sm text-secondary font-semibold">60%</span>
+                                </div>
+                            </div>
+
+                            <div class="p-3 rounded-lg bg-surface hover:bg-surface-container transition-colors flex items-center justify-between">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+                                        <span class="material-symbols-outlined text-[20px]">dataset</span>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="font-title-lg text-[15px] text-primary truncate">Big Data</div>
+                                        <div class="font-body-sm text-body-sm text-on-surface-variant truncate">MUHAMMAD GIVI EFGIVIA, Dr., Ir., M.Kom</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 shrink-0">
+                                    <div class="w-20 bg-surface-container-highest rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
+                                    </div>
+                                    <span class="font-label-sm text-label-sm text-primary font-semibold">40%</span>
+                                </div>
+                            </div>
+
+                            <div class="p-3 rounded-lg bg-surface hover:bg-surface-container transition-colors flex items-center justify-between">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+                                        <span class="material-symbols-outlined text-[20px]">shield</span>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="font-title-lg text-[15px] text-primary truncate">Manajemen Resiko</div>
+                                        <div class="font-body-sm text-body-sm text-on-surface-variant truncate">TIRTA ANHARI, S.T, M.Kom</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 shrink-0">
+                                    <div class="w-20 bg-surface-container-highest rounded-full h-2">
+                                        <div class="bg-secondary h-2 rounded-full" style="width: 50%"></div>
+                                    </div>
+                                    <span class="font-label-sm text-label-sm text-secondary font-semibold">50%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pinned Urgent Deadline Notice -->
+                        <div class="p-3 rounded-lg bg-secondary-container/15 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-secondary text-[22px]">notification_important</span>
+                            <div class="flex-1 min-w-0">
+                                <div class="font-label-sm text-label-sm text-secondary font-bold truncate">Tugas 1: Paper Review Big Data</div>
+                                <div class="font-body-sm text-body-sm text-on-surface">Tenggat: 15 Oktober 2026 &bull; Belum Dikerjakan</div>
+                            </div>
+                            <a class="px-2.5 py-1 rounded bg-secondary text-on-secondary font-label-sm text-label-sm hover:bg-on-secondary-container transition-colors shrink-0" href="tugas.html">
+                                Lihat
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FITUR SECTION (Numbered Bento Grid) -->
+        <section id="fitur" class="w-full py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-surface-container-low">
+            <div class="max-w-7xl mx-auto flex flex-col gap-12">
+                <!-- Section Title & Narrative -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="flex flex-col gap-2 max-w-xl">
+                        <span class="font-label-md text-label-md uppercase tracking-wider text-secondary font-bold flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[16px]">menu_book</span>
+                            Fitur Unggulan Mahasiswa
+                        </span>
+                        <h2 class="font-headline-lg text-headline-lg text-primary">Fitur Unggulan</h2>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+                        Didesain khusus untuk meningkatkan produktivitas mahasiswa dan mempermudah akses ke sumber belajar.
+                    </p>
+                </div>
+
+                <!-- The 4 Features Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Fitur 1: Materi Digital Terpusat -->
+                    <div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div class="flex flex-col gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                                <span class="material-symbols-outlined text-[26px]">library_books</span>
+                            </div>
+                            <span class="font-label-sm text-label-sm text-secondary font-bold tracking-wider uppercase">01 &bull; Materi</span>
+                            <h3 class="font-title-lg text-title-lg text-primary">Materi Digital Terpusat</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">
+                                Akses semua modul, presentasi, dan referensi bacaan tanpa harus mencari di berbagai grup chat. Semua tersusun rapi per pertemuan.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-4 flex items-center gap-2 text-primary font-label-sm text-label-sm">
+                            <span>Tersusun Per Pertemuan</span>
+                            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                        </div>
+                    </div>
+
+                    <!-- Fitur 2: Manajemen Tugas -->
+                    <div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div class="flex flex-col gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+                                <span class="material-symbols-outlined text-[26px]">assignment_turned_in</span>
+                            </div>
+                            <span class="font-label-sm text-label-sm text-secondary font-bold tracking-wider uppercase">02 &bull; Tugas</span>
+                            <h3 class="font-title-lg text-title-lg text-primary">Manajemen Tugas</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">
+                                Pantau deadline dengan mudah. Kumpulkan tugas langsung melalui platform tanpa ribet.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-4 flex items-center gap-2 text-secondary font-label-sm text-label-sm">
+                            <span>Deadline Otomatis</span>
+                            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                        </div>
+                    </div>
+
+                    <!-- Fitur 3: Pantau Progress -->
+                    <div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div class="flex flex-col gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                                <span class="material-symbols-outlined text-[26px]">monitoring</span>
+                            </div>
+                            <span class="font-label-sm text-label-sm text-secondary font-bold tracking-wider uppercase">03 &bull; Progress</span>
+                            <h3 class="font-title-lg text-title-lg text-primary">Pantau Progress</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">
+                                Lihat indikator visual dari setiap mata kuliah yang sedang kamu ikuti secara real-time.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-4 flex items-center gap-2 text-primary font-label-sm text-label-sm">
+                            <span>Statistik Real-Time</span>
+                            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                        </div>
+                    </div>
+
+                    <!-- Fitur 4: Jadwal Kuliah Terintegrasi -->
+                    <div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div class="flex flex-col gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                                <span class="material-symbols-outlined text-[26px]">calendar_month</span>
+                            </div>
+                            <span class="font-label-sm text-label-sm text-secondary font-bold tracking-wider uppercase">04 &bull; Jadwal</span>
+                            <h3 class="font-title-lg text-title-lg text-primary">Jadwal Kuliah Terintegrasi</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">
+                                Ketahui jadwal perkuliahan harianmu langsung dari dashboard, lengkap dengan ringkasan pertemuan berikutnya.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-4 flex items-center gap-2 text-primary font-label-sm text-label-sm">
+                            <span>Terhubung ke Dashboard</span>
+                            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MATA KULIAH SECTION (Course Registry Cards) -->
+        <section id="mata-kuliah" class="w-full py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-surface">
+            <div class="max-w-7xl mx-auto flex flex-col gap-12">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="flex flex-col gap-2">
+                        <span class="font-label-md text-label-md uppercase tracking-wider text-secondary font-bold">Katalog Semester Ini</span>
+                        <h2 class="font-headline-lg text-headline-lg text-primary">Mata Kuliah Tersedia</h2>
+                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Jelajahi program studi unggulan semester ini.</p>
+                    </div>
+                    <a href="login.html" class="inline-flex items-center gap-1 font-label-lg text-label-lg text-primary hover:text-secondary transition-colors font-semibold self-start md:self-auto">
+                        Lihat Semua <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </a>
+                </div>
+
+                
+                <!-- Course Registry 7 Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Course 1: Seminar Capstone Project -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col group">
+                        <div class="h-44 relative bg-surface-container overflow-hidden">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Diskusi tim capstone di ruang rapat kampus dengan papan tulis rencana proyek." src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=60" alt="Ilustrasi diskusi tim capstone">
+                            <div class="absolute top-3 left-3 bg-primary text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded">
+                                3 SKS
+                            </div>
+                            <div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur text-primary font-label-sm text-label-sm px-2 py-0.5 rounded">
+                                Smt 7
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between gap-4">
+                            <div>
+                                <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Seminar Capstone Project</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5">
+                                    Seminar penyusunan proposal capstone: perumusan masalah, tinjauan pustaka, metodologi, dan rencana pengembangan proyek.
+                                </p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-body-sm gap-2">
+                                    <span class="text-on-surface-variant shrink-0">Dosen:</span>
+                                    <span class="font-label-md text-label-md text-primary font-bold text-right">MUHAMMAD GIVI EFGIVIA, Dr., Ir., M.Kom</span>
+                                </div>
+                                <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-primary">menu_book</span>
+                                        2 Modul
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-secondary">task</span>
+                                        3 Tugas
+                                    </span>
+                                </div>
+                            </div>
+                            <a class="w-full py-2.5 rounded-lg bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md text-center transition-colors" href="login.html">
+                                Akses Mata Kuliah
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Course 2: Audit System &amp; IT Governance -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col group">
+                        <div class="h-44 relative bg-surface-container overflow-hidden">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Dokumen audit, grafik analitik, dan catatan kontrol di atas meja kerja." src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=60" alt="Ilustrasi dokumen audit sistem informasi">
+                            <div class="absolute top-3 left-3 bg-secondary text-on-secondary font-label-sm text-label-sm px-2.5 py-1 rounded">
+                                3 SKS
+                            </div>
+                            <div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur text-primary font-label-sm text-label-sm px-2 py-0.5 rounded">
+                                Smt 5
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between gap-4">
+                            <div>
+                                <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Audit System &amp; IT Governance</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5">
+                                    Audit sistem informasi dan tata kelola TI: standar COBIT/ISO 27001, kontrol internal, serta pelaporan kepatuhan.
+                                </p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-body-sm gap-2">
+                                    <span class="text-on-surface-variant shrink-0">Dosen:</span>
+                                    <span class="font-label-md text-label-md text-primary font-bold text-right">NUR CHALIK AZHAR, M.Kom</span>
+                                </div>
+                                <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-primary">menu_book</span>
+                                        2 Modul
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-secondary">task</span>
+                                        3 Tugas
+                                    </span>
+                                </div>
+                            </div>
+                            <a class="w-full py-2.5 rounded-lg bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md text-center transition-colors" href="login.html">
+                                Akses Mata Kuliah
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Course 3: Big Data -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col group">
+                        <div class="h-44 relative bg-surface-container overflow-hidden">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Laboratorium analitik data kampus dengan layar yang menampilkan node data terdistribusi." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcUfUdqVX4XxZ0ZDLm5mcb32KEDYpMOb0VCE0fDyC_Fi0StC6bTk5EwFp1ZYo4lTcqk4tiYsr17dXLw-f09lDw23NwJtV5Y9_7LlIlG0XWLxYaKOVn8ORy0HyGrzNT8r1GVJnV_oskbMImIJvLp6ZjQyBAb8g5fyhVWPzskFJPweBn63zL3HvufSB7BLswaVJ68h-5YelfDf2Wg_ImxXNOvgtKgJv4TIHb5sRf4_4" alt="Ilustrasi laboratorium analitik data">
+                            <div class="absolute top-3 left-3 bg-primary text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded">
+                                3 SKS
+                            </div>
+                            <div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur text-primary font-label-sm text-label-sm px-2 py-0.5 rounded">
+                                Smt 5
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between gap-4">
+                            <div>
+                                <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Big Data</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5">
+                                    Pengantar konsep Big Data, Hadoop, Spark, dan analisis data berskala besar.
+                                </p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-body-sm gap-2">
+                                    <span class="text-on-surface-variant shrink-0">Dosen:</span>
+                                    <span class="font-label-md text-label-md text-primary font-bold text-right">MUHAMMAD GIVI EFGIVIA, Dr., Ir., M.Kom</span>
+                                </div>
+                                <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-primary">menu_book</span>
+                                        2 Modul
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-secondary">task</span>
+                                        3 Tugas
+                                    </span>
+                                </div>
+                            </div>
+                            <a class="w-full py-2.5 rounded-lg bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md text-center transition-colors" href="login.html">
+                                Akses Mata Kuliah
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Course 4: Enterprise Resource Planning (ERP) -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col group">
+                        <div class="h-44 relative bg-surface-container overflow-hidden">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Ruang kantor modern dengan layar sistem enterprise terintegrasi." src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=60" alt="Ilustrasi ruang kerja enterprise">
+                            <div class="absolute top-3 left-3 bg-secondary text-on-secondary font-label-sm text-label-sm px-2.5 py-1 rounded">
+                                3 SKS
+                            </div>
+                            <div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur text-primary font-label-sm text-label-sm px-2 py-0.5 rounded">
+                                Smt 6
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between gap-4">
+                            <div>
+                                <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Enterprise Resource Planning (ERP)</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5">
+                                    Konsep ERP, modul bisnis terintegrasi, seleksi vendor, implementasi, dan evaluasi sistem ERP pada organisasi.
+                                </p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-body-sm gap-2">
+                                    <span class="text-on-surface-variant shrink-0">Dosen:</span>
+                                    <span class="font-label-md text-label-md text-primary font-bold text-right">FALDY IRWIENSYAH, S.Kom, MTI</span>
+                                </div>
+                                <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-primary">menu_book</span>
+                                        2 Modul
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-secondary">task</span>
+                                        3 Tugas
+                                    </span>
+                                </div>
+                            </div>
+                            <a class="w-full py-2.5 rounded-lg bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md text-center transition-colors" href="login.html">
+                                Akses Mata Kuliah
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Course 5: Kewirausahaan -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col group">
+                        <div class="h-44 relative bg-surface-container overflow-hidden">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Tim startup menyusun rencana bisnis di depan papan tulis." src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=60" alt="Ilustrasi penyusunan rencana bisnis">
+                            <div class="absolute top-3 left-3 bg-primary text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded">
+                                2 SKS
+                            </div>
+                            <div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur text-primary font-label-sm text-label-sm px-2 py-0.5 rounded">
+                                Smt 3
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between gap-4">
+                            <div>
+                                <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Kewirausahaan</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5">
+                                    Etika wirausaha, ide usaha, business model canvas, inovasi, dan penyusunan rencana bisnis.
+                                </p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-body-sm gap-2">
+                                    <span class="text-on-surface-variant shrink-0">Dosen:</span>
+                                    <span class="font-label-md text-label-md text-primary font-bold text-right">ADITYO ARI WIBOWO, Dr., SE., MM</span>
+                                </div>
+                                <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-primary">menu_book</span>
+                                        2 Modul
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-secondary">task</span>
+                                        3 Tugas
+                                    </span>
+                                </div>
+                            </div>
+                            <a class="w-full py-2.5 rounded-lg bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md text-center transition-colors" href="login.html">
+                                Akses Mata Kuliah
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Course 6: Manajemen Resiko -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col group">
+                        <div class="h-44 relative bg-surface-container overflow-hidden">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Kelas perkuliahan dengan dosen menjelaskan matriks resiko di layar." src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=60" alt="Ilustrasi kelas perkuliahan manajemen resiko">
+                            <div class="absolute top-3 left-3 bg-secondary text-on-secondary font-label-sm text-label-sm px-2.5 py-1 rounded">
+                                3 SKS
+                            </div>
+                            <div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur text-primary font-label-sm text-label-sm px-2 py-0.5 rounded">
+                                Smt 6
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between gap-4">
+                            <div>
+                                <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Manajemen Resiko</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5">
+                                    Identifikasi, analisis, mitigasi, dan pemantauan resiko pada proyek dan organisasi informatika.
+                                </p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-body-sm gap-2">
+                                    <span class="text-on-surface-variant shrink-0">Dosen:</span>
+                                    <span class="font-label-md text-label-md text-primary font-bold text-right">TIRTA ANHARI, S.T, M.Kom</span>
+                                </div>
+                                <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-primary">menu_book</span>
+                                        2 Modul
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-secondary">task</span>
+                                        2 Tugas
+                                    </span>
+                                </div>
+                            </div>
+                            <a class="w-full py-2.5 rounded-lg bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md text-center transition-colors" href="login.html">
+                                Akses Mata Kuliah
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Course 7: Sistem Pendukung Keputusan dan Eksekutif -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col group">
+                        <div class="h-44 relative bg-surface-container overflow-hidden">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Mahasiswa dan dosen menganalisis diagram alur sistem di perpustakaan." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArbMaq_EhBNDFinoEl7AtrLmiOQKH4QAveqeziDkDKW5vERE1dGko4JVqck18KclTpRg0Mf_7W2nDnDWzgCa8TG2uRX856mD21ogTslYlic42MVsdz3Inb-28yGviplI16rjLRBAXMfooJHZXknBVsVEdaLar9a_rr4tFF87wyiC_dAj4vBQq8j3bgqOZaiXJ2KyMVCGEdP_gd3B2gRZOojpN3MkatY3EtNSJ1iQA" alt="Ilustrasi analisis diagram sistem">
+                            <div class="absolute top-3 left-3 bg-primary text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded">
+                                3 SKS
+                            </div>
+                            <div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur text-primary font-label-sm text-label-sm px-2 py-0.5 rounded">
+                                Smt 7
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between gap-4">
+                            <div>
+                                <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Sistem Pendukung Keputusan dan Eksekutif</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5">
+                                    Sistem pendukung keputusan, dashboard eksekutif, analitik bisnis, dan data warehouse untuk pengambilan keputusan.
+                                </p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-body-sm gap-2">
+                                    <span class="text-on-surface-variant shrink-0">Dosen:</span>
+                                    <span class="font-label-md text-label-md text-primary font-bold text-right">ERIZAL, S.Kom.,M.Kom.</span>
+                                </div>
+                                <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-primary">menu_book</span>
+                                        2 Modul
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px] text-secondary">task</span>
+                                        2 Tugas
+                                    </span>
+                                </div>
+                            </div>
+                            <a class="w-full py-2.5 rounded-lg bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md text-center transition-colors" href="login.html">
+                                Akses Mata Kuliah
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-surface-container py-space-xl border-t border-outline-variant/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div class="flex flex-col gap-2">
+                <div class="flex items-baseline gap-2">
+                    <span class="font-headline-sm text-headline-sm text-primary tracking-tight">Learnova.</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">&copy; 2026 Big Data</span>
+                </div>
+                <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm leading-relaxed">
+                    Learning Management System for Modern Students. Dikembangkan sebagai pemenuhan Tugas Kelompok.
+                </p>
+            </div>
+            <div class="font-body-sm text-body-sm text-on-surface-variant md:text-right">
+                <p class="font-medium text-on-surface">Muhammad Adrian &bull; Egi Bayu Setiawan &bull; Muhammad Ilham</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

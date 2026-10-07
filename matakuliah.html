@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learnova - Mata Kuliah</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Learnova legacy aliases (token values aligned with Stitch)
+                        primary: '#022619',
+                        accent: '#D4621A',
+                        base: '#F5F0E8',
+                        surface: '#eafef2',
+                        border: '#C8D5CC',
+                        // Stitch semantic palette
+                        background: '#eafef2',
+                        'on-surface': '#0e1f18',
+                        'on-surface-variant': '#414844',
+                        'surface-dim': '#cbdfd3',
+                        'surface-bright': '#eafef2',
+                        'surface-tint': '#436555',
+                        'surface-variant': '#d3e7dc',
+                        'surface-container-lowest': '#ffffff',
+                        'surface-container-low': '#e4f8ed',
+                        'surface-container': '#def3e7',
+                        'surface-container-high': '#d9ede1',
+                        'surface-container-highest': '#d3e7dc',
+                        'primary-container': '#1a3c2e',
+                        'primary-fixed': '#c5ebd7',
+                        'primary-fixed-dim': '#aacfbb',
+                        'on-primary': '#ffffff',
+                        'on-primary-container': '#82a794',
+                        'on-primary-fixed': '#002115',
+                        'on-primary-fixed-variant': '#2c4d3e',
+                        'inverse-on-surface': '#e1f6ea',
+                        secondary: '#9f4200',
+                        'secondary-container': '#fd8038',
+                        'secondary-fixed': '#ffdbcb',
+                        'secondary-fixed-dim': '#ffb691',
+                        'on-secondary': '#ffffff',
+                        'on-secondary-container': '#642700',
+                        'on-secondary-fixed': '#341100',
+                        'on-secondary-fixed-variant': '#793100',
+                        outline: '#727974',
+                        'outline-variant': '#c1c8c2',
+                        error: '#ba1a1a',
+                        'error-container': '#ffdad6',
+                        'on-error-container': '#93000a',
+                        'on-error': '#ffffff'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Newsreader"', 'serif'],
+                        'headline-xl': ['"Newsreader"', 'serif'],
+                        'headline-lg': ['"Newsreader"', 'serif'],
+                        'headline-md': ['"Newsreader"', 'serif'],
+                        'headline-sm': ['"Newsreader"', 'serif'],
+                        'title-lg': ['"Newsreader"', 'serif'],
+                        'body-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'body-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'body-sm': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'label-sm': ['"Plus Jakarta Sans"', 'sans-serif']
+                    },
+                    fontSize: {
+                        'headline-xl': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '500' }],
+                        'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.015em', fontWeight: '500' }],
+                        'headline-md': ['28px', { lineHeight: '36px', letterSpacing: '-0.01em', fontWeight: '500' }],
+                        'headline-sm': ['22px', { lineHeight: '30px', letterSpacing: '-0.005em', fontWeight: '600' }],
+                        'title-lg': ['18px', { lineHeight: '26px', fontWeight: '600' }],
+                        'body-lg': ['18px', { lineHeight: '28px', letterSpacing: '-0.005em', fontWeight: '400' }],
+                        'body-md': ['15px', { lineHeight: '24px', fontWeight: '400' }],
+                        'body-sm': ['13px', { lineHeight: '20px', fontWeight: '400' }],
+                        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.01em', fontWeight: '600' }],
+                        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.02em', fontWeight: '600' }],
+                        'label-sm': ['11px', { lineHeight: '14px', letterSpacing: '0.04em', fontWeight: '600' }]
+                    },
+                    spacing: {
+                        'space-xs': '0.25rem',
+                        'space-sm': '0.5rem',
+                        'space-md': '1rem',
+                        'space-lg': '1.5rem',
+                        'space-xl': '2.5rem',
+                        gutter: '1.5rem',
+                        'gutter-mobile': '1rem'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols (Stitch icon set) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-background font-body-md text-body-md text-on-surface antialiased selection:bg-accent selection:text-white">
+
+    <!-- SIDEBAR (Stitch fixed left rail, desktop only) -->
+    <aside
+        class="hidden lg:flex fixed left-0 top-0 h-full w-72 bg-primary-container text-on-primary-container z-50 flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.06)]">
+        <div class="flex flex-col">
+            <!-- Brand -->
+            <div class="h-20 px-space-lg flex items-center gap-space-sm bg-primary/40">
+                <div
+                    class="w-10 h-10 rounded-xl bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[22px]">school</span>
+                </div>
+                <div class="flex flex-col ml-space-xs">
+                    <span class="font-headline-sm text-headline-sm text-inverse-on-surface leading-none tracking-tight">Learnova</span>
+                    <span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase tracking-wider">LMS Portal</span>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="px-space-md py-space-sm">
+                <div class="px-space-sm py-space-xs mb-space-xs">
+                    <span class="font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Navigasi Utama</span>
+                </div>
+                <nav class="flex flex-col gap-space-xs">
+                    <a
+                        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg text-surface-container-highest/80 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="dashboard.html">
+                        <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a aria-current="page"
+                        class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-surface-container-highest text-primary font-label-lg rounded-xl"
+                        href="matakuliah.html">
+                        <span class="material-symbols-outlined text-[20px]">menu_book</span>
+                        <span>Mata Kuliah</span>
+                    </a>
+                    <a
+                        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg text-surface-container-highest/80 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="materi.html">
+                        <span class="material-symbols-outlined text-[20px]">auto_stories</span>
+                        <span>Materi</span>
+                    </a>
+                    <a
+                        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg text-surface-container-highest/80 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="tugas.html">
+                        <span class="material-symbols-outlined text-[20px]">assignment</span>
+                        <span>Tugas</span>
+                    </a>
+                    <a
+                        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg text-surface-container-highest/80 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="jadwal.html">
+                        <span class="material-symbols-outlined text-[20px]">event</span>
+                        <span>Jadwal</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- User Card -->
+        <div class="p-space-md">
+            <div class="p-space-md rounded-xl bg-primary/60 flex flex-col gap-space-xs">
+                <div class="flex items-center gap-space-sm">
+                    <div
+                        class="w-10 h-10 rounded-full bg-surface-container-highest text-primary flex items-center justify-center font-label-lg text-label-lg font-bold shrink-0">
+                        MI
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                        <span class="font-label-lg text-label-lg text-inverse-on-surface truncate" data-user-name>Muhammad Ilham</span>
+                        <span class="font-label-sm text-label-sm text-primary-fixed-dim truncate">Sistem dan Teknologi Informasi</span>
+                    </div>
+                </div>
+                <div class="pt-space-xs flex flex-col gap-space-xs">
+                    <div class="flex items-center justify-between text-on-primary-container">
+                        <span class="font-body-sm text-body-sm text-surface-container-highest/70">Semester Ganjil</span>
+                        <span
+                            class="px-space-xs py-0.5 rounded-full bg-secondary text-on-secondary font-label-sm text-[10px]">2026/2027</span>
+                    </div>
+                    <a
+                        class="mt-space-xs flex items-center justify-between px-space-sm py-space-xs rounded-lg text-surface-container-highest/90 hover:bg-surface-container-highest/20 hover:text-inverse-on-surface transition-colors"
+                        href="index.html">
+                        <span class="font-label-md text-label-md">Keluar Akun</span>
+                        <span class="material-symbols-outlined text-[18px]">logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTENT WRAPPER -->
+    <div class="lg:pl-72">
+
+        <!-- TOP BAR -->
+        <header
+            class="fixed top-0 left-0 right-0 lg:left-72 z-40 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+            <div class="h-20 px-gutter lg:px-space-lg flex items-center justify-between gap-space-md">
+                <div class="flex items-center gap-space-md">
+                    <!-- Hamburger (mobile/tablet) -->
+                    <button id="mobile-menu-btn"
+                        class="lg:hidden p-2 -ml-2 text-on-surface hover:text-primary focus:outline-none"
+                        aria-label="Toggle Menu">
+                        <span class="material-symbols-outlined text-[26px]">menu</span>
+                    </button>
+                    <!-- Semester Chip -->
+                    <div
+                        class="hidden sm:flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container text-on-surface">
+                        <span class="material-symbols-outlined text-[18px] text-surface-tint">school</span>
+                        <span class="font-label-md text-label-md font-medium">Semester Ganjil 2026/2027</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-space-md">
+                    <!-- Bell -> Papan Pengumuman (Dashboard) -->
+                    <a href="dashboard.html#papan-pengumuman"
+                        class="relative p-2 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors"
+                        aria-label="Notifikasi">
+                        <span class="material-symbols-outlined text-[22px]">notifications</span>
+                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-secondary ring-2 ring-surface"></span>
+                    </a>
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">
+                        MI
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden lg:hidden bg-surface-container border-t border-outline-variant">
+                <div class="px-4 pt-2 pb-4 space-y-1">
+                    <a href="dashboard.html"
+                        class="block px-3 py-2 text-label-lg text-on-surface hover:bg-surface-container-highest rounded-xl transition-colors">Dashboard</a>
+                    <a href="matakuliah.html"
+                        class="block px-3 py-2 text-label-lg font-semibold text-primary bg-surface-container-highest rounded-xl">Mata
+                        Kuliah</a>
+                    <a href="materi.html"
+                        class="block px-3 py-2 text-label-lg text-on-surface hover:bg-surface-container-highest rounded-xl transition-colors">Materi</a>
+                    <a href="tugas.html"
+                        class="block px-3 py-2 text-label-lg text-on-surface hover:bg-surface-container-highest rounded-xl transition-colors">Tugas</a>
+                    <a href="jadwal.html"
+                        class="block px-3 py-2 text-label-lg text-on-surface hover:bg-surface-container-highest rounded-xl transition-colors">Jadwal</a>
+                    <div class="mt-3 pt-3 border-t border-outline-variant flex flex-col space-y-2 px-1">
+                        <a href="index.html"
+                            class="block w-full text-center border border-outline-variant text-on-surface-variant px-4 py-2.5 rounded-xl text-label-lg hover:bg-error-container hover:text-on-error-container hover:border-error transition-colors">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="w-full pt-20 px-gutter lg:px-space-lg pb-space-xl min-h-screen bg-background">
+            <div class="flex flex-col w-full gap-space-lg pt-space-lg">
+
+                <!-- Overview & Editorial Header Banner -->
+                <section class="relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm p-space-lg lg:p-space-xl">
+                    <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none">
+                    </div>
+                    <div class="absolute right-32 -bottom-20 w-64 h-64 rounded-full bg-secondary/5 blur-2xl pointer-events-none">
+                    </div>
+                    <div class="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+                        <div class="flex flex-col max-w-2xl">
+                            <div class="flex items-center gap-space-xs mb-space-sm flex-wrap">
+                                <span
+                                    class="px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm uppercase tracking-wider flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                    Katalog Akademik
+                                </span>
+                                <span class="text-outline-variant font-label-sm text-label-sm">&bull;</span>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant">Semester Ganjil
+                                    2026/2027</span>
+                            </div>
+                            <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight font-normal leading-tight">
+                                Katalog &amp; Detail Mata Kuliah Semester Ini
+                            </h1>
+                            <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs leading-relaxed">
+                                Terdaftar <strong class="text-on-surface font-semibold">7 Mata Kuliah Aktif</strong> dengan
+                                total beban studi <strong class="text-on-surface font-semibold">20 SKS</strong> pada Program
+                                Studi Sistem dan Teknologi Informasi.
+                            </p>
+                        </div>
+                        <!-- Academic Stat Badges / Quick Highlights -->
+                        <div class="flex items-center gap-space-sm sm:gap-space-md shrink-0 flex-wrap">
+                            <div class="flex flex-col p-space-md rounded-xl bg-surface-container-low min-w-[130px]">
+                                <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total
+                                    Beban</span>
+                                <div class="flex items-baseline gap-1 mt-1">
+                                    <span class="font-headline-md text-headline-md text-primary font-bold">20</span>
+                                    <span class="font-label-sm text-label-sm text-on-surface-variant">SKS</span>
+                                </div>
+                                <span class="font-label-sm text-[10px] text-surface-tint mt-0.5">Status: Optimal</span>
+                            </div>
+                            <div class="flex flex-col p-space-md rounded-xl bg-surface-container-low min-w-[130px]">
+                                <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Mata
+                                    Kuliah</span>
+                                <div class="flex items-baseline gap-1 mt-1">
+                                    <span class="font-headline-md text-headline-md text-primary font-bold">7</span>
+                                    <span class="font-label-sm text-label-sm text-on-surface-variant">Aktif</span>
+                                </div>
+                                <span class="font-label-sm text-[10px] text-primary-container mt-0.5">Kurikulum Terpadu</span>
+                            </div>
+                            <div class="flex flex-col p-space-md rounded-xl bg-surface-container-highest min-w-[130px]">
+                                <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Rata-rata
+                                    Progress</span>
+                                <div class="flex items-baseline gap-1 mt-1">
+                                    <span class="font-headline-md text-headline-md text-secondary font-bold">41%</span>
+                                </div>
+                                <span class="font-label-sm text-[10px] text-secondary mt-0.5">7 Mata Kuliah</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Filter & Utility Bar -->
+                <section
+                    class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+                    <div class="flex flex-wrap items-center gap-space-sm">
+                        <div
+                            class="flex items-center gap-space-xs px-space-md py-2 rounded-full bg-surface-container text-on-surface font-label-md text-label-md">
+                            <span class="material-symbols-outlined text-[18px] text-surface-tint">calendar_today</span>
+                            <span>Semester Ganjil 2026/2027</span>
+                        </div>
+                        <div
+                            class="flex items-center gap-space-xs px-space-md py-2 rounded-full bg-surface-container-low text-on-surface font-label-md text-label-md">
+                            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">apartment</span>
+                            <span>Sistem dan Teknologi Informasi</span>
+                        </div>
+                        <div
+                            class="hidden xl:flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-surface-container-highest/60 text-primary-container font-label-sm text-label-sm">
+                            <span class="material-symbols-outlined text-[16px]">verified</span>
+                            <span>7 Mata Kuliah Terdaftar</span>
+                        </div>
+                    </div>
+                    <div class="relative w-full md:w-80">
+                        <span
+                            class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+                        <input id="course-search" type="text"
+                            class="w-full pl-10 pr-4 py-2 rounded-full bg-surface-container font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-sm transition-all"
+                            placeholder="Cari nama mata kuliah atau dosen...">
+                    </div>
+                </section>
+
+                <!-- Primary Showcase: Big Data (Expanded Detail Card, pertemuan tabs) -->
+                <article
+                    class="relative flex flex-col bg-surface-container-lowest rounded-xl shadow-md overflow-hidden transition-all duration-300">
+                    <div class="h-1.5 w-full bg-primary"></div>
+                    <div class="p-space-lg lg:p-space-xl flex flex-col gap-space-lg">
+
+                        <!-- Card Top Info -->
+                        <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-space-md">
+                            <div class="flex items-start gap-space-md">
+                                <div
+                                    class="w-14 h-14 rounded-xl bg-primary-container text-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm">
+                                    <span class="material-symbols-outlined text-[28px]">dataset</span>
+                                </div>
+                                <div class="flex flex-col min-w-0">
+                                    <div class="flex items-center gap-space-xs flex-wrap">
+                                        <span
+                                            class="px-2.5 py-0.5 rounded-full bg-surface-container-highest text-primary font-label-sm text-[11px] font-bold tracking-wider">3
+                                            SKS</span>
+                                        <span
+                                            class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-[11px]">FT401</span>
+                                        <span
+                                            class="text-secondary font-label-sm text-[11px] font-bold flex items-center gap-0.5 ml-1">
+                                            <span class="material-symbols-outlined text-[14px]">event</span>
+                                            Rabu, 07:50 - 10:20 WIB
+                                        </span>
+                                    </div>
+                                    <h2
+                                        class="font-headline-md text-headline-md text-primary font-normal mt-1 leading-snug">
+                                        Big Data
+                                    </h2>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="material-symbols-outlined text-[18px] text-surface-tint">account_circle</span>
+                                        <span class="font-body-md text-body-md text-on-surface font-medium">MUHAMMAD GIVI
+                                            EFGIVIA, Dr., Ir., M.Kom</span>
+                                        <span class="text-outline-variant font-body-sm text-body-sm">&bull;</span>
+                                        <span class="font-body-sm text-body-sm text-on-surface-variant">Dosen Pengampu</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Metric Summary Group -->
+                            <div class="flex items-center gap-space-lg bg-surface-container-low p-space-md rounded-xl shrink-0">
+                                <div class="flex flex-col items-center justify-center text-center">
+                                    <div class="relative w-16 h-16 flex items-center justify-center">
+                                        <svg class="w-16 h-16 transform -rotate-90" viewbox="0 0 36 36">
+                                            <path class="text-surface-container-highest"
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none" stroke="currentColor" stroke-width="3"></path>
+                                            <path class="text-primary"
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none" stroke="currentColor" stroke-dasharray="40, 100"
+                                                stroke-linecap="round" stroke-width="3"></path>
+                                        </svg>
+                                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                            <span class="font-label-lg text-label-lg font-bold text-primary">40%</span>
+                                        </div>
+                                    </div>
+                                    <span class="font-label-sm text-[10px] text-on-surface-variant mt-1 uppercase font-semibold">2
+                                        / 2 Materi</span>
+                                </div>
+                                <div class="flex flex-col gap-1.5 min-w-[140px]">
+                                    <div class="flex items-center justify-between text-body-sm font-body-sm">
+                                        <span class="text-on-surface-variant flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-[15px] text-surface-tint">article</span>
+                                            Materi:</span>
+                                        <span class="font-semibold text-primary">2 Modul</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-body-sm font-body-sm">
+                                        <span class="text-on-surface-variant flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-[15px] text-secondary">task</span>
+                                            Tugas:</span>
+                                        <span class="font-semibold text-secondary">3 Terjadwal</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-body-sm font-body-sm">
+                                        <span class="text-on-surface-variant flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-[15px] text-primary">how_to_reg</span>
+                                            Progres:</span>
+                                        <span class="font-semibold text-primary">40%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Selector Pertemuan -->
+                        <div class="flex items-center justify-between gap-space-md flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[20px] text-primary">timeline</span>
+                                <h3 class="font-title-lg text-title-lg text-primary">Rincian Perkuliahan</h3>
+                            </div>
+                            <div class="flex bg-surface-container p-1.5 rounded-xl w-full sm:w-auto" id="pertemuan-tabs">
+                                <button onclick="switchMeeting(1)" id="tab-btn-1"
+                                    class="flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-primary text-white shadow-sm">
+                                    Pertemuan 1</button>
+                                <button onclick="switchMeeting(2)" id="tab-btn-2"
+                                    class="flex-1 sm:flex-none px-4 py-2 text-xs font-medium text-on-surface-variant rounded-lg hover:text-primary transition-all">
+                                    Pertemuan 2</button>
+                                <button onclick="switchMeeting(3)" id="tab-btn-3"
+                                    class="flex-1 sm:flex-none px-4 py-2 text-xs font-medium text-on-surface-variant rounded-lg hover:text-primary transition-all">
+                                    Pertemuan 3</button>
+                            </div>
+                        </div>
+
+                        <!-- Content Area Pertemuan -->
+                        <div>
+                            <!-- Pertemuan 1 Panel -->
+                            <div id="meeting-content-1" class="space-y-6">
+                                <div class="bg-surface-container rounded-xl p-space-md lg:p-space-lg">
+                                    <div class="flex justify-between items-start mb-2 gap-2">
+                                        <h3 class="font-title-lg text-title-lg text-on-surface">Pertemuan 1: Pengenalan
+                                            Ekosistem Big Data</h3>
+                                        <span class="badge-stitch badge-stitch-completed whitespace-nowrap">Selesai</span>
+                                    </div>
+                                    <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-4">
+                                        Konsep 3V/5V (Volume, Velocity, Variety), skenario use cases Big Data di industri,
+                                        serta peta ekosistem pemrosesan data berskala besar.
+                                    </p>
+
+                                    <!-- Grid Materi, Tugas, Praktikum -->
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <!-- Materi Box -->
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-academic">Materi</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Konsep
+                                                    3V dan Use Cases Big Data</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Dokumen PDF
+                                                    &bull; Pertemuan 1</p>
+                                            </div>
+                                            <a href="materi.html"
+                                                class="mt-4 font-label-md text-label-md text-secondary hover:text-on-secondary-container transition-colors flex items-center gap-1">
+                                                Akses Materi
+                                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                            </a>
+                                        </div>
+
+                                        <!-- Tugas Box -->
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-urgent">Tugas</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Tugas 1:
+                                                    Paper Review Big Data</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Status: Belum
+                                                    Dikerjakan &bull; Deadline: 15 Oktober 2026</p>
+                                            </div>
+                                            <a href="tugas.html"
+                                                class="mt-4 font-label-md text-label-md text-secondary hover:text-on-secondary-container transition-colors flex items-center gap-1">
+                                                Detail Tugas
+                                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                            </a>
+                                        </div>
+
+                                        <!-- Praktikum Box -->
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-warning">Praktikum</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Lab 1:
+                                                    Instalasi &amp; Setup Environment</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Virtual Machine
+                                                    &amp; Java Runtime</p>
+                                            </div>
+                                            <span class="mt-4 font-label-sm text-label-sm text-outline">Praktikum Selesai</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pertemuan 2 Panel (Hidden default) -->
+                            <div id="meeting-content-2" class="hidden space-y-6">
+                                <div class="bg-surface-container rounded-xl p-space-md lg:p-space-lg">
+                                    <div class="flex justify-between items-start mb-2 gap-2">
+                                        <h3 class="font-title-lg text-title-lg text-on-surface">Pertemuan 2: Pemrosesan
+                                            Terdistribusi</h3>
+                                        <span class="badge-stitch badge-stitch-completed whitespace-nowrap">Selesai</span>
+                                    </div>
+                                    <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-4">
+                                        Mekanisme penyimpanan blok pada HDFS, logika pemrosesan paralel MapReduce, serta
+                                        peran YARN sebagai resource manager.
+                                    </p>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-academic">Materi</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Hadoop
+                                                    &amp; MapReduce Overview</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Video
+                                                    Rekaman &bull; Pertemuan 2</p>
+                                            </div>
+                                            <a href="materi.html"
+                                                class="mt-4 font-label-md text-label-md text-secondary hover:text-on-secondary-container transition-colors flex items-center gap-1">Akses
+                                                Materi
+                                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span></a>
+                                        </div>
+
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-urgent">Tugas</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Tugas 2:
+                                                    Analisis Dataset Terbuka</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Deadline:
+                                                    29 Oktober 2026</p>
+                                            </div>
+                                            <a href="tugas.html"
+                                                class="mt-4 font-label-md text-label-md text-secondary hover:text-on-secondary-container transition-colors flex items-center gap-1">Detail
+                                                Tugas
+                                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span></a>
+                                        </div>
+
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-warning">Praktikum</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Lab 2:
+                                                    Eksekusi File System HDFS CLI</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Single Node
+                                                    Cluster Sandbox</p>
+                                            </div>
+                                            <span class="mt-4 font-label-sm text-label-sm text-outline">Praktikum Selesai</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pertemuan 3 Panel (Hidden default) -->
+                            <div id="meeting-content-3" class="hidden space-y-6">
+                                <div class="bg-surface-container rounded-xl p-space-md lg:p-space-lg">
+                                    <div class="flex justify-between items-start mb-2 gap-2">
+                                        <h3 class="font-title-lg text-title-lg text-on-surface">Pertemuan 3: Analitik
+                                            &amp; Visualisasi Data</h3>
+                                        <span class="badge-stitch badge-stitch-urgent whitespace-nowrap">Aktif / Berjalan</span>
+                                    </div>
+                                    <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-4">
+                                        Pengantar Spark untuk analitik data, pembuatan dashboard sederhana, dan penerapan
+                                        analitik pada kasus bisnis nyata.
+                                    </p>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-academic">Materi</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Materi
+                                                    belum dipublikasikan</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Akan
+                                                    diunggah menjelang pertemuan</p>
+                                            </div>
+                                            <span class="mt-4 font-label-sm text-label-sm text-outline">Menunggu unggahan
+                                                dosen</span>
+                                        </div>
+
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-urgent">Tugas</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Tugas 3:
+                                                    Dashboard Analitik</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Deadline: 12
+                                                    November 2026</p>
+                                            </div>
+                                            <a href="tugas.html"
+                                                class="mt-4 font-label-md text-label-md text-secondary hover:text-on-secondary-container transition-colors flex items-center gap-1">Detail
+                                                Tugas
+                                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span></a>
+                                        </div>
+
+                                        <div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+                                            <div>
+                                                <span class="badge-stitch badge-stitch-warning">Praktikum</span>
+                                                <h4 class="font-body-md text-body-md text-on-surface font-semibold mt-2">Lab 3:
+                                                    PySpark pada Jupyter Notebook</h4>
+                                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Jadwal: Kamis,
+                                                    13:00</p>
+                                            </div>
+                                            <a href="materi.html"
+                                                class="mt-4 font-label-md text-label-md text-secondary hover:text-on-secondary-container transition-colors flex items-center gap-1">Panduan
+                                                Lab
+                                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Row -->
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-md pt-space-xs border-t border-outline-variant">
+                            <div class="flex items-center gap-3 font-body-sm text-body-sm text-on-surface-variant">
+                                <span class="flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[18px] text-surface-tint">event_note</span>
+                                    Jadwal: Rabu, 07:50 - 10:20 &bull; FT401
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-space-sm justify-end">
+                                <a class="px-space-md py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-highest text-primary font-label-lg text-label-lg transition-colors flex items-center gap-2"
+                                    href="tugas.html">
+                                    <span class="material-symbols-outlined text-[18px]">assignment</span>
+                                    <span>Daftar Tugas (3)</span>
+                                </a>
+                                <a class="px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg shadow-sm transition-all flex items-center gap-2"
+                                    href="materi.html">
+                                    <span class="material-symbols-outlined text-[18px]">menu_book</span>
+                                    <span>Buka Materi Kuliah</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Semua Mata Kuliah: Grid Section -->
+                <section>
+                    <div class="flex justify-between items-end mb-space-sm px-space-xs">
+                        <div class="flex items-center gap-space-xs">
+                            <span class="material-symbols-outlined text-primary text-[22px]">school</span>
+                            <h2 class="font-title-lg text-title-lg text-primary">Semua Mata Kuliah</h2>
+                        </div>
+                        <span class="font-label-md text-label-md text-on-surface-variant">7 Mata Kuliah Aktif</span>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="courses-loading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-lg">
+                        <div class="rounded-xl bg-surface-container-lowest p-space-md animate-pulse flex flex-col gap-3">
+                            <div class="h-5 bg-surface-container rounded w-3/4"></div>
+                            <div class="h-4 bg-surface-container rounded w-1/2"></div>
+                            <div class="h-2 bg-surface-container rounded w-full"></div>
+                            <div class="h-8 bg-surface-container rounded"></div>
+                        </div>
+                        <div class="rounded-xl bg-surface-container-lowest p-space-md animate-pulse flex flex-col gap-3">
+                            <div class="h-5 bg-surface-container rounded w-3/4"></div>
+                            <div class="h-4 bg-surface-container rounded w-1/2"></div>
+                            <div class="h-2 bg-surface-container rounded w-full"></div>
+                            <div class="h-8 bg-surface-container rounded"></div>
+                        </div>
+                        <div class="rounded-xl bg-surface-container-lowest p-space-md animate-pulse flex flex-col gap-3">
+                            <div class="h-5 bg-surface-container rounded w-3/4"></div>
+                            <div class="h-4 bg-surface-container rounded w-1/2"></div>
+                            <div class="h-2 bg-surface-container rounded w-full"></div>
+                            <div class="h-8 bg-surface-container rounded"></div>
+                        </div>
+                        <div class="rounded-xl bg-surface-container-lowest p-space-md animate-pulse flex flex-col gap-3">
+                            <div class="h-5 bg-surface-container rounded w-3/4"></div>
+                            <div class="h-4 bg-surface-container rounded w-1/2"></div>
+                            <div class="h-2 bg-surface-container rounded w-full"></div>
+                            <div class="h-8 bg-surface-container rounded"></div>
+                        </div>
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="courses-error" class="hidden bg-error-container border border-error rounded-xl p-6 text-center">
+                        <span class="material-symbols-outlined text-[40px] text-on-error-container mb-2">error</span>
+                        <h3 class="font-title-lg text-title-lg text-on-error-container mb-2">Gagal Memuat Data Mata Kuliah</h3>
+                        <p class="font-body-sm text-body-sm text-on-error-container mb-4" id="courses-error-message">Terjadi
+                            kesalahan saat menghubungi server.</p>
+                        <button onclick="loadCourses()"
+                            class="px-4 py-2 bg-error text-white text-sm font-semibold rounded-lg hover:opacity-90 transition">Coba
+                            Lagi</button>
+                    </div>
+
+                    <!-- Courses Grid (populated by JS) -->
+                    <div id="courses-grid" class="hidden grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-lg"></div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-outline-variant py-6 bg-surface-container-low">
+            <div
+                class="px-gutter lg:px-space-lg flex flex-col md:flex-row justify-between items-center gap-4 font-body-sm text-body-sm text-on-surface-variant">
+                <p>&copy; 2026 Learnova LMS &bull; Tugas Kelompok Big Data.</p>
+                <p>M. Adrian &bull; Egi Bayu S. &bull; M. Ilham</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        const API_BASE = window.API_BASE;
+        // User id dari sesi login (localStorage); fallback 1 bila dibuka tanpa login
+        const USER_ID = (() => {
+            try {
+                const u = JSON.parse(localStorage.getItem('learnova_user'));
+                return (u && u.id) ? u.id : 1;
+            } catch (e) { return 1; }
+        })();
+
+        // Tab switching logic khusus halaman mata kuliah
+        function switchMeeting(meetingNum) {
+            // Sembunyikan semua konten pertemuan
+            for (let i = 1; i <= 3; i++) {
+                const content = document.getElementById(`meeting-content-${i}`);
+                const tabBtn = document.getElementById(`tab-btn-${i}`);
+                if (content && tabBtn) {
+                    if (i === meetingNum) {
+                        content.classList.remove('hidden');
+                        tabBtn.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-primary text-white shadow-sm";
+                    } else {
+                        content.classList.add('hidden');
+                        tabBtn.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-medium text-on-surface-variant rounded-lg hover:text-primary transition-all";
+                    }
+                }
+            }
+        }
+
+        // Learnova SKS mapping (konsisten dengan index.html)
+        const courseSks = { 1: 3, 2: 3, 3: 3, 4: 3, 5: 2, 6: 3, 7: 3 };
+
+        function getCourseIcon(id) {
+            const icons = ['campaign', 'fact_check', 'dataset', 'inventory_2', 'storefront', 'shield', 'insights'];
+            return icons[(id - 1) % icons.length];
+        }
+
+        // Load courses and progress from API
+        async function loadCourses() {
+            const loadingEl = document.getElementById('courses-loading');
+            const errorEl = document.getElementById('courses-error');
+            const gridEl = document.getElementById('courses-grid');
+            const errorMsgEl = document.getElementById('courses-error-message');
+
+            loadingEl.classList.remove('hidden');
+            errorEl.classList.add('hidden');
+            gridEl.classList.add('hidden');
+            gridEl.innerHTML = '';
+
+            try {
+                const [coursesRes, progressRes] = await Promise.all([
+                    fetch(`${API_BASE}/matakuliah`),
+                    fetch(`${API_BASE}/progress?user_id=${USER_ID}`)
+                ]);
+
+                if (!coursesRes.ok) throw new Error(`HTTP ${coursesRes.status}: Gagal memuat mata kuliah`);
+                if (!progressRes.ok) throw new Error(`HTTP ${progressRes.status}: Gagal memuat progress`);
+
+                const coursesData = await coursesRes.json();
+                const progressData = await progressRes.json();
+
+                if (!coursesData.success || !progressData.success) {
+                    throw new Error('Format response API tidak valid');
+                }
+
+                const courses = coursesData.data;
+                const progressList = progressData.data;
+
+                // Map progress by course_id for quick lookup
+                const progressMap = new Map();
+                progressList.forEach(p => {
+                    progressMap.set(p.matakuliah_id, p);
+                });
+
+                // Render course cards
+                courses.forEach((course, index) => {
+                    const progress = progressMap.get(course.id);
+                    const percentage = progress ? progress.persentase : 0;
+                    const completedMaterials = progress ? progress.completed_materials : 0;
+                    const completedTasks = progress ? progress.completed_tasks : 0;
+                    const sks = courseSks[course.id] || 3;
+
+                    // Determine featured vs interactive card variant
+                    const focusBadge = index === 0 ? '<span class="absolute -top-3 right-4 z-10 bg-primary text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Fokus Detail</span>' : '';
+
+                    const card = document.createElement('div');
+                    card.className = `group relative flex flex-col justify-between bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-all`;
+                    card.dataset.search = `${course.name} ${course.lecturer}`.toLowerCase();
+                    card.innerHTML = `
+                        ${focusBadge}
+                        <div class="flex flex-col">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-highest text-primary font-label-sm text-[11px] font-bold">${sks} SKS</span>
+                                <span class="badge-stitch ${percentage >= 50 ? 'badge-stitch-completed' : 'badge-stitch-warning'}">${percentage}%</span>
+                            </div>
+                            <div class="mt-space-md flex items-start gap-space-sm">
+                                <div class="w-12 h-12 rounded-xl bg-surface-container text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                                    <span class="material-symbols-outlined text-[24px]">${getCourseIcon(course.id)}</span>
+                                </div>
+                                <div class="flex flex-col min-w-0">
+                                    <h3 class="font-headline-sm text-headline-sm text-primary leading-tight font-medium">${escapeHtml(course.name)}</h3>
+                                    <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">${escapeHtml(course.lecturer)}</span>
+                                </div>
+                            </div>
+                            <p class="font-body-sm text-body-sm text-on-surface-variant mt-space-md line-clamp-2">${escapeHtml(course.description || '')}</p>
+
+                            <div class="mt-space-lg flex flex-col gap-1.5">
+                                <div class="flex items-center justify-between font-label-sm text-label-sm">
+                                    <span class="text-on-surface-variant">Progres Pembelajaran</span>
+                                    <span class="font-bold text-primary">${percentage}%</span>
+                                </div>
+                                <div class="progress-stitch">
+                                    <div class="progress-stitch-bar ${percentage >= 50 ? 'submitted' : 'active'}" style="width: ${percentage}%"></div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-space-xs mt-space-md pt-space-xs">
+                                <div class="flex items-center gap-2 p-2 rounded-lg bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-[18px] text-surface-tint">folder_open</span>
+                                    <span><strong class="text-primary font-semibold">${completedMaterials}</strong>/${course.total_materials} Materi</span>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 rounded-lg bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-[18px] text-secondary">task_alt</span>
+                                    <span><strong class="text-secondary font-semibold">${completedTasks}</strong>/${course.total_tasks} Tugas</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-space-lg pt-space-md flex items-center justify-between border-t border-outline-variant">
+                            <a href="materi.html" class="font-label-md text-label-md text-surface-tint hover:text-primary transition-colors flex items-center gap-1">Lihat Materi</a>
+                            <a href="tugas.html" class="font-label-lg text-label-lg text-primary hover:text-surface-tint flex items-center gap-1 font-semibold group-hover:translate-x-0.5 transition-all">
+                                <span>Lihat Tugas</span>
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    `;
+                    gridEl.appendChild(card);
+                });
+
+                loadingEl.classList.add('hidden');
+                gridEl.classList.remove('hidden');
+
+            } catch (err) {
+                console.error('Error loading courses:', err);
+                loadingEl.classList.add('hidden');
+                errorMsgEl.textContent = err.message || 'Terjadi kesalahan tidak diketahui';
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        // Simple HTML escape to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Client-side search filter untuk courses grid
+        const courseSearch = document.getElementById('course-search');
+        if (courseSearch) {
+            courseSearch.addEventListener('input', function () {
+                const q = this.value.trim().toLowerCase();
+                document.querySelectorAll('#courses-grid > div').forEach(card => {
+                    const hay = card.dataset.search || '';
+                    card.classList.toggle('hidden', q !== '' && !hay.includes(q));
+                });
+            });
+        }
+
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', loadCourses);
+    </script>
+</body>
+</html>
